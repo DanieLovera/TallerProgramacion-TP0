@@ -155,51 +155,7 @@ A continuación se detallan los errores, estos fueron enumerados para mayor clar
 4. **implicit declaration of function 'wordscounter_get_words'**: Es el mismo error que en (2) y (3).  
 5. **implicit declaration of function 'wordscounter_destroy'**: Es el mismo error que en (2), (3) y (4).  
 
-**c. ¿El sistema reportó algún WARNING? ¿Por qué?**  Descomprimiendo el codigo 'source_unsafe.zip'...
-Archive:  source_unsafe.zip
-  inflating: source_unsafe/paso2_main.c
-  inflating: source_unsafe/paso2_wordscounter.c
-  inflating: source_unsafe/paso2_wordscounter.h
-Compilando el codigo...
-cc -Wall -Werror -pedantic -pedantic-errors -O3 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -Dwrapsocks=1 -std=c11 -o paso2_wordscounter.o -c paso2_wordscounter.c
-In file included from paso2_wordscounter.c:1:
-paso2_wordscounter.h:7:5: error: unknown type name 'size_t'
-    7 |     size_t words;
-      |     ^~~~~~
-paso2_wordscounter.h:20:1: error: unknown type name 'size_t'
-   20 | size_t wordscounter_get_words(wordscounter_t *self);
-      | ^~~~~~
-paso2_wordscounter.h:1:1: note: 'size_t' is defined in header '<stddef.h>'; did you forget to '#include <stddef.h>'?
-  +++ |+#include <stddef.h>
-    1 | #ifndef __WORDSCOUNTER_H__
-paso2_wordscounter.h:25:49: error: unknown type name 'FILE'
-   25 | void wordscounter_process(wordscounter_t *self, FILE *text_file);
-      |                                                 ^~~~
-paso2_wordscounter.h:1:1: note: 'FILE' is defined in header '<stdio.h>'; did you forget to '#include <stdio.h>'?
-  +++ |+#include <stdio.h>
-    1 | #ifndef __WORDSCOUNTER_H__
-paso2_wordscounter.c:17:8: error: conflicting types for 'wordscounter_get_words'
-   17 | size_t wordscounter_get_words(wordscounter_t *self) {
-      |        ^~~~~~~~~~~~~~~~~~~~~~
-In file included from paso2_wordscounter.c:1:
-paso2_wordscounter.h:20:8: note: previous declaration of 'wordscounter_get_words' was here
-   20 | size_t wordscounter_get_words(wordscounter_t *self);
-      |        ^~~~~~~~~~~~~~~~~~~~~~
-paso2_wordscounter.c: In function 'wordscounter_next_state':
-paso2_wordscounter.c:30:25: error: implicit declaration of function 'malloc' [-Wimplicit-function-declaration]
-   30 |     char* delim_words = malloc(7 * sizeof(char));
-      |                         ^~~~~~
-paso2_wordscounter.c:30:25: error: incompatible implicit declaration of built-in function 'malloc' [-Werror]
-paso2_wordscounter.c:5:1: note: include '<stdlib.h>' or provide a declaration of 'malloc'
-    4 | #include <stdbool.h>
-  +++ |+#include <stdlib.h>
-    5 |
-cc1: all warnings being treated as errors
-make: *** [/task/student/MakefileTP0:144: paso2_wordscounter.o] Error 1
-
-real    0m0.020s
-user    0m0.015s
-sys     0m0.004s
+**c. ¿El sistema reportó algún WARNING? ¿Por qué?**  
 [Error] Fallo la compilacion del codigo en 'source_unsafe.zip'. Codigo de error 2
 > El sistema no reportó ningún warning, todos fueron errores, sin embargo los errores del 2 al 5 en realidad son warnings que se estan considerando como errores porque así se le indica al compilador que lo haga (**flag Werror**), es decir realmente no serían un inconveniente para que se generará el código objeto, no obstante los warnings son posibles errores en tiempo de ejecución y no es recomendable dejarlos pasar pues es mas fácil corregir errores en compilación que hacerlo con un debugger en ejecución.  
 
