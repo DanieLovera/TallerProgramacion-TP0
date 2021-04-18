@@ -8,7 +8,10 @@
 
 - [x] Paso 0
 - [x] Paso 1
-- [ ] Paso 2
+- [x] Paso 2
+- [ ] Paso 3
+- [ ] Paso 4
+- [ ] Paso 5
 
 ---
 ### DESARROLLO ###   
@@ -145,14 +148,143 @@ make: *** [/task/student/MakefileTP0:144: paso1_main.o] Error 1
 En este caso es el compilador o linker los que informan sobrelos errores de una forma similar al cpplint, estos errores muchas veces son autodescriptivos, e indican el archivo que contiene el problema, la línea en que ocurre, en que caracter de la línea ocurre, y si el problema es un error o un warning junto con la descripción del mismo. **Ejemplo** de como se lee una línea de error:  
 >  nombre_archivo.[extensión_archivo]:[línea_código]:[número_caracter]:[warning/error]:[Descripción]  
 
-A continuación se detallan los errores, estos fueron enumerados para mayor claridad:  
+A continuación se detallan los errores, estos fueron enumerados para mayor claridad y no forman parte de la salida orginal.  
 1. **unknown type name 'wordscounter_t'**: Indica que el tipo de dato **wordscounter_t** es desconocido, nunca fue definido por lo tanto el compilador no puede saber cuando espacio necesita reservar en el stack y no le sera posible generar código objeto. Este es un error que detecta el compilador.
 2. **implicit declaration of function 'wordscounter_create'**: Indica que hay una declaración implicita de la funcion **wordscounter_create**, es decir que no se puede generar código ejecutable porque no le hemos asegurado al compilador la existencia de dicha función. Este es un error que detecta el compilador.  
 3. **implicit declaration of function 'wordscounter_process'**: Es el mismo error que en (2).  
 4. **implicit declaration of function 'wordscounter_get_words'**: Es el mismo error que en (2) y (3).  
 5. **implicit declaration of function 'wordscounter_destroy'**: Es el mismo error que en (2), (3) y (4).  
 
-**c. ¿El sistema reportó algún WARNING? ¿Por qué?**  
-> El sistema no reportó ningún warning, todos fueron errores, sin embargo los errores del 2 al 5 en realidad son warnings que se estan considerando como errores porque así se le indica al compilador que lo haga (**flag Werror**), es decir realmente no serían un inconveniente para que se generará el código objeto, no obstante los warnings son posibles errores en tiempo de ejecución y no es recomendable dejarlos pasar pues es mas fácil corregir errores en compilación que hacerlo con un debugger en ejecución.
+**c. ¿El sistema reportó algún WARNING? ¿Por qué?**  Descomprimiendo el codigo 'source_unsafe.zip'...
+Archive:  source_unsafe.zip
+  inflating: source_unsafe/paso2_main.c
+  inflating: source_unsafe/paso2_wordscounter.c
+  inflating: source_unsafe/paso2_wordscounter.h
+Compilando el codigo...
+cc -Wall -Werror -pedantic -pedantic-errors -O3 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -Dwrapsocks=1 -std=c11 -o paso2_wordscounter.o -c paso2_wordscounter.c
+In file included from paso2_wordscounter.c:1:
+paso2_wordscounter.h:7:5: error: unknown type name 'size_t'
+    7 |     size_t words;
+      |     ^~~~~~
+paso2_wordscounter.h:20:1: error: unknown type name 'size_t'
+   20 | size_t wordscounter_get_words(wordscounter_t *self);
+      | ^~~~~~
+paso2_wordscounter.h:1:1: note: 'size_t' is defined in header '<stddef.h>'; did you forget to '#include <stddef.h>'?
+  +++ |+#include <stddef.h>
+    1 | #ifndef __WORDSCOUNTER_H__
+paso2_wordscounter.h:25:49: error: unknown type name 'FILE'
+   25 | void wordscounter_process(wordscounter_t *self, FILE *text_file);
+      |                                                 ^~~~
+paso2_wordscounter.h:1:1: note: 'FILE' is defined in header '<stdio.h>'; did you forget to '#include <stdio.h>'?
+  +++ |+#include <stdio.h>
+    1 | #ifndef __WORDSCOUNTER_H__
+paso2_wordscounter.c:17:8: error: conflicting types for 'wordscounter_get_words'
+   17 | size_t wordscounter_get_words(wordscounter_t *self) {
+      |        ^~~~~~~~~~~~~~~~~~~~~~
+In file included from paso2_wordscounter.c:1:
+paso2_wordscounter.h:20:8: note: previous declaration of 'wordscounter_get_words' was here
+   20 | size_t wordscounter_get_words(wordscounter_t *self);
+      |        ^~~~~~~~~~~~~~~~~~~~~~
+paso2_wordscounter.c: In function 'wordscounter_next_state':
+paso2_wordscounter.c:30:25: error: implicit declaration of function 'malloc' [-Wimplicit-function-declaration]
+   30 |     char* delim_words = malloc(7 * sizeof(char));
+      |                         ^~~~~~
+paso2_wordscounter.c:30:25: error: incompatible implicit declaration of built-in function 'malloc' [-Werror]
+paso2_wordscounter.c:5:1: note: include '<stdlib.h>' or provide a declaration of 'malloc'
+    4 | #include <stdbool.h>
+  +++ |+#include <stdlib.h>
+    5 |
+cc1: all warnings being treated as errors
+make: *** [/task/student/MakefileTP0:144: paso2_wordscounter.o] Error 1
+
+real    0m0.020s
+user    0m0.015s
+sys     0m0.004s
+[Error] Fallo la compilacion del codigo en 'source_unsafe.zip'. Codigo de error 2
+> El sistema no reportó ningún warning, todos fueron errores, sin embargo los errores del 2 al 5 en realidad son warnings que se estan considerando como errores porque así se le indica al compilador que lo haga (**flag Werror**), es decir realmente no serían un inconveniente para que se generará el código objeto, no obstante los warnings son posibles errores en tiempo de ejecución y no es recomendable dejarlos pasar pues es mas fácil corregir errores en compilación que hacerlo con un debugger en ejecución.  
+
+### Paso 2: SERCOM - Errores de generación 2 ###  
+Se entregaron los módulos correspondientes a la segunda entrega en el SERCOM, este no reporto errores de estilo por cpplint, pero incrementaron lo errores por parte del compilador.  
+
+**Documentación de errores**  
+
+**a. Descripción de los cambios realizados con respecto a la versión del paso 1.**  
+  
+**Ejecución del comando diff**  
+  
+![Ejecucion del comando diff](./screenshots/diff_command.png)  
+  
+Se puede observar como en cada archivo .c se incluyeron los .h que contenian las definiciones de funciones requeridas por el compilador, se corrigieron los espacios en blanco extras, adicionalmente se alinearon los else e ifs con sus llaves predecesoras, se redujo la cantidad de carácteres contenidos en el comentario del archivo de cabecera a menos de 81 y se reemplazo la función insegura strcpy por memcpy. Estas modificaciones corrigieron los problemas de estilos reportados por cpplint. **Ejemplo** de como interpretar el comando **diff**:    
+> **[num_lineas_archivo1][acción][num_lineas_archivo2]**. Siendo la acción alguno de los siguientes caractéres: **a**(add), **c**(change) o **d**(delete).  
+> Entonces la primera indicación del comando diff se leería como:
+> Después de la línea 3 del del primer archivo se debe cambiar la función strcpy por memcpy para que ambos archivos sean iguales en la línea 4.  
+
+**b. Correcta ejecución de las normas de programación (cpplint).**  
+  
+``` 
+Done processing /task/student//source_unsafe/paso2_wordscounter.h
+Done processing /task/student//source_unsafe/paso2_main.c
+Done processing /task/student//source_unsafe/paso2_wordscounter.c
+```  
+**c. Problemas de generación del ejecutable**  
+
+```
+Compilando el codigo...
+cc -Wall -Werror -pedantic -pedantic-errors -O3 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -Dwrapsocks=1 -std=c11 -o paso2_wordscounter.o -c paso2_wordscounter.c
+In file included from paso2_wordscounter.c:1:
+1. paso2_wordscounter.h:7:5: error: unknown type name 'size_t'
+    7 |     size_t words;
+      |     ^~~~~~
+2. paso2_wordscounter.h:20:1: error: unknown type name 'size_t'
+   20 | size_t wordscounter_get_words(wordscounter_t *self);
+      | ^~~~~~
+3. paso2_wordscounter.h:1:1: note: 'size_t' is defined in header '<stddef.h>'; did you forget to '#include <stddef.h>'?
+  +++ |+#include <stddef.h>
+    1 | #ifndef __WORDSCOUNTER_H__
+4. paso2_wordscounter.h:25:49: error: unknown type name 'FILE'
+   25 | void wordscounter_process(wordscounter_t *self, FILE *text_file);
+      |                                                 ^~~~
+5. paso2_wordscounter.h:1:1: note: 'FILE' is defined in header '<stdio.h>'; did you forget to '#include <stdio.h>'?
+  +++ |+#include <stdio.h>
+    1 | #ifndef __WORDSCOUNTER_H__
+6. paso2_wordscounter.c:17:8: error: conflicting types for 'wordscounter_get_words'
+   17 | size_t wordscounter_get_words(wordscounter_t *self) {
+      |        ^~~~~~~~~~~~~~~~~~~~~~
+In file included from paso2_wordscounter.c:1:
+7. paso2_wordscounter.h:20:8: note: previous declaration of 'wordscounter_get_words' was here
+   20 | size_t wordscounter_get_words(wordscounter_t *self);
+      |        ^~~~~~~~~~~~~~~~~~~~~~
+8. paso2_wordscounter.c: In function 'wordscounter_next_state':
+paso2_wordscounter.c:30:25: error: implicit declaration of function 'malloc' [-Wimplicit-function-declaration]
+   30 |     char* delim_words = malloc(7 * sizeof(char));
+      |                         ^~~~~~
+9. paso2_wordscounter.c:30:25: error: incompatible implicit declaration of built-in function 'malloc' [-Werror]
+10. paso2_wordscounter.c:5:1: note: include '<stdlib.h>' or provide a declaration of 'malloc'
+    4 | #include <stdbool.h>
+  +++ |+#include <stdlib.h>
+    5 |
+cc1: all warnings being treated as errors
+make: *** [/task/student/MakefileTP0:144: paso2_wordscounter.o] Error 1
+```
+A continuación se detallan los errores, estos fueron enumerados para mayor claridad y no forman parte de la salida orginal.  
+1. **unknown type name 'size_t'**: Indica que el tipo de dato size_t es desconocido, esto es un error que detecta el compilador ya que no puede reservar espacio en memoria para la variable.  
+2. **unknown type name 'size_t'**: Es el mismo error que (1), mientras no encuentre una definición seguira ocurriendo.  
+3. **'size_t' is defined in header '<stddef.h>'; did you forget to '#include stddef.h'**: En este caso el compilador detecto que se esta haciendo uso de un tipo de dato que se encuentra definido en la libreria **stddef.h** y esta haciendo una forma de recordatorio para que sea incluido.  
+4. **unknown type name 'FILE'**: Es el mismo error que (1) pero en este caso el compilador no encuentra la definición de FILE.  
+5. **'FILE' is defined in header '<stdio.h>'; did you forget to '#include stdio.h'**: Es la misma sugerencia que (3) pero para el dato **FILE** de la libreria **stdio.h**  
+6. **conflicting types for 'wordscounter_get_words'**: Indica un problema en los tipos de datos declarados en la funcion **wordscounter_get_words** en este caso el tipo es el **size_t**, el compilador no conoce el tipo de dato de retorno, el error del punto (1) empezo a aparecer en varias partes del código.
+7. **previous declaration of 'wordscounter_get_words' was here**: El compilador esta indicando el lugar en donde se declaro la función con el su llamado en el archivo .c.  
+8. **implicit declaration of function 'malloc'**: Indica una declaracion implicita de la función **malloc**, esto es porque no se realizo la declaración de la función y el compilador no tiene asegurada su existencia por lo tanto no compilara el código. Esta siendo considerado como error por el compilador pero es un warning, aunque no le aseguremos la existencia de la función el código podría funcionar y en caso de que realmente no exista una función con esa firma fallar en etapa de **linkeo**.  
+9. **incompatible implicit declaration of built-in function 'malloc'**: Indica que la misma función del error (8) genera otro problema, el compilador no sabe si la definición implícita empareja con el tipo de dato al que se quiere asignar (char*) en el momento de retornar. Este igualmente es un warning tratado como error.    
+10. **include '<stdlib.h>' or provide a declaration of 'malloc'**: El compilador esta nuevamente sugiriendo que incluyamos la libreria que contiene la declaración de **malloc**.  
+
+
+
+
+
+
+
+
+
 
 
