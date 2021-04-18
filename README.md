@@ -25,7 +25,7 @@ Se crea un programa simple que muestra el mensaje "Hola Mundo" el cual se ejecut
 **Preguntas Teóricas**
 
 **a. ¿Para que sirve Valgrind? ¿Cuales son sus opciones mas comunes?**   
-> **Valgrind** es un conjunto de herramientas que pueden ser utilizadas para *debugging* (corrección de errores) o *profiling* (análisis de rendimiento) de un programa, su ejecución en línea de comando es de la forma: valgrind --tool<toolname> ./programa_ejecutable.  
+> **Valgrind** es un conjunto de herramientas que pueden ser utilizadas para *debugging* (corrección de errores) o *profiling* (análisis de rendimiento) de un programa, su ejecución en línea de comando es de la forma: valgrind --tool\<toolname> ./programa_ejecutable.  
  
 Las herramientas mas comunes son:  
 
