@@ -24,28 +24,28 @@ Se crea un programa simple que muestra el mensaje "Hola Mundo" el cual se ejecut
 **Preguntas Teóricas**
 
 **a. ¿Para que sirve Valgrind? ¿Cuales son sus opciones mas comunes?** (REVISAR ORTOGRAFIA)  
-> **Valgrind** es un conjunto de herramientas que pueden ser utilizadas para *debugging* (corrección de errores) o *profiling* (análisis de rendimiento) de un programa.  
-> Las *tools* (herramientas) mas comunes son:  
+ **Valgrind** es un conjunto de herramientas que pueden ser utilizadas para *debugging* (corrección de errores) o *profiling* (análisis de rendimiento) de un programa.  
+ Las herramientas mas comunes son:  
 
 - **Memcheck:** 
->> Detecta errores relacionados a la memoria. Posiblemente sea la opción mas común pues es la herramienta que se utiliza por defecto cuando se ejecuta un programa  con valgrind y ademas es muy comun en C/C++ que los programadores olviden liberar memoria solicitada dinamicamenta (problema grave que imposibilita reutilizar estas porciones de memoria mientras el programa se mantenga 
+> Detecta errores relacionados a la memoria. Posiblemente sea la opción mas común pues es la herramienta que se utiliza por defecto cuando se ejecuta un programa  con valgrind y ademas es muy comun en C/C++ que los programadores olviden liberar memoria solicitada dinamicamenta (problema grave que imposibilita reutilizar estas porciones de memoria mientras el programa se mantenga 
 en ejecución).  
 
 - **Cachegrind:**
->> Herramienta de profiling que ayuda al programador a conocer como comportan las memorias caches del procesador en la 
+> Herramienta de profiling que ayuda al programador a conocer como comportan las memorias caches del procesador en la 
 ejecucion de un programa.  
 
 Otras herramientas menos comunes o al menos desconocidas para el autor de este texto son:
 - **Callgrind:**
->> Recolecta información sobre los llamados a funciones en un programa.  
+> Recolecta información sobre los llamados a funciones en un programa.  
 - **Helgrind:**
->> Detecta errores en la ejecucion de threads de un programa.  
+> Detecta errores en la ejecucion de threads de un programa.  
 - **DRD:**
->> Otra opcion para deteccion de errores en threads.  
+> Otra opcion para deteccion de errores en threads.  
 - **Massif:**
->> Analiza el uso del Heap (area de memoria dinamica).  
+> Analiza el uso del Heap (area de memoria dinamica).  
 - **DHAT:**
->> Es otra herramienta para analizar el Heap.  
+> Es otra herramienta para analizar el Heap.  
 
 La ejecucion de valgrind en linea de comando es de la forma: valgrind --tool<toolname> ./programa_ejecutable
 
