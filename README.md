@@ -172,7 +172,7 @@ Se entregaron los módulos correspondientes a la segunda entrega en el SERCOM, e
   
 Se puede observar como en cada archivo .c se incluyeron los .h que contenian las definiciones de funciones requeridas por el compilador, se corrigieron los espacios en blanco extras, adicionalmente se alinearon los else e ifs con sus llaves predecesoras, se redujo la cantidad de carácteres contenidos en el comentario del archivo de cabecera a menos de 81 y se reemplazo la función insegura strcpy por memcpy. Estas modificaciones corrigieron los problemas de estilos reportados por cpplint. **Ejemplo** de como interpretar el comando **diff**:    
 > **[num_lineas_archivo1][acción][num_lineas_archivo2]**. Siendo la acción alguno de los siguientes caractéres: **a**(add), **c**(change) o **d**(delete).  
-> Entonces la primera indicación del comando diff se leería como:
+> Entonces la primera indicación del comando diff se leería:  
 > Después de la línea 3 del del primer archivo se debe cambiar la función strcpy por memcpy para que ambos archivos sean iguales en la línea 4.  
 
 **b. Correcta ejecución de las normas de programación (cpplint).**  
@@ -234,11 +234,36 @@ A continuación se detallan los errores, estos fueron enumerados para mayor clar
 9. **incompatible implicit declaration of built-in function 'malloc'**: Indica que la misma función del error (8) genera otro problema, el compilador no sabe si la definición implícita empareja con el tipo de dato al que se quiere asignar (char*) en el momento de retornar. Este igualmente es un warning tratado como error.    
 10. **include '<stdlib.h>' or provide a declaration of 'malloc'**: El compilador esta nuevamente sugiriendo que incluyamos la libreria que contiene la declaración de **malloc**.  
 
+### Paso 3: SERCOM - Errores de generación 3 ###  
+Se entregaron los módulos correspondientes a la segunda entrega en el SERCOM, este no reporto errores de estilo por cpplint, pero incrementaron lo errores por parte del compilador.  
 
+**Documentación de errores**  
 
+**a. Descripción de los cambios realizados con respecto a la versión del paso 2.**  
+  
+**Ejecución del comando diff**  
+  
+![Ejecucion del comando diff](./screenshots/diff_command2.png)  
+  
+Con respecto al archivo anterior se actualizaron los headers y se incluyeron las librerías que hacian falta en el paso 1. El compilador sugería incluir **stddef.h** para encontrar la definición de **size_t.h** pero **stdlib.h** también la contiene.
 
+**b. Problemas de generación del ejecutable**  
 
+```
+cc -Wall -Werror -pedantic -pedantic-errors -O3 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -Dwrapsocks=1 -std=c11 -o paso3_wordscounter.o -c paso3_wordscounter.c
+cc -Wall -Werror -pedantic -pedantic-errors -O3 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -Dwrapsocks=1 -std=c11 -o paso3_main.o -c paso3_main.c
+cc paso3_wordscounter.o paso3_main.o -o tp -lm -Wl,--wrap=send -Wl,--wrap=recv
+/usr/bin/ld: paso3_main.o: in function `main':
+/task/student/source_unsafe/paso3_main.c:27: undefined reference to `wordscounter_destroy'
+collect2: error: ld returned 1 exit status
+make: *** [/task/student/MakefileTP0:135: tp] Error 1
+```
+Solo se reportó un error al momento de generar el ejecutable:  
+> **undefined reference to `wordscounter_destroy'**: Indica que no se definio una referencia a la funcion wordscounter_destroy, este es un error en tiempo de linkeo. Esto se puede reconocer por las siguientes formas:  
 
+1. El nombre del problema es una pista para entender que el linker lo generó,ya que indica que no encuentra cual es la dirección de memoria a la cual asignarle los llamados del main.c a esta.  
+2. Revisando el proceso de compilación que se llevo acabo, se observa que las primeras 4 líneas corresponden a llamados al compilador para llevar los archivos **paso3_wordscounter.c** y **paso3_main.c** a código objeto por separado (flags **-c**), pero la línea 5 ya es una instrucción diferente, se le pide al compilador que cree un ejecutable linkeando los códigos objetos que recién generó, es por eso que el llamado al linker (**/usr/bin/ld**) genera un error en la función que se definió como ***"main"*** internamente en el código assembly.  
+3. El error reportado según el informe lo genera el linker (**error: ld returned 1 exit status**), el código de que devuelve al momento de salir del proceso es 1 de error.  
 
 
 
