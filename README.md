@@ -12,6 +12,7 @@
 
 ---
 ### DESARROLLO ###   
+En esta sección se detallan los pasos seguidos durante el desarrollo del trabajo.
 
 ### Paso 0: Entorno de Trabajo ###  
 Se crea un programa simple que muestra el mensaje "Hola Mundo" el cual se ejecuta con y sin valgrind, los resultados obtenidos fueron:
@@ -77,4 +78,7 @@ Ejemplos de como redirigir los archivos estandar por CLI:
 1. **echo "Hola Mundo" > example.txt** 
 2. **grep < example "Hola"** 
 3. **ls non_existing_command >> error_example.txt**
-4. **echo "Hola Mundo" | grep "Hola"**
+4. **echo "Hola Mundo" | grep "Hola"**  
+
+### Paso 1: SERCOM - Errores de generación y normas de programación ###
+LALALALALA
