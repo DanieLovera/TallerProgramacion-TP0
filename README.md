@@ -1,23 +1,51 @@
-# tp0
-Contador de palabras
+# Tp0: Contador de Palabras #
+**Autor: Daniel Alejandro Lovera López**  
+**N° padrón: 103442**  
+**[https://github.com/DanieLovera/tp0](https://github.com/DanieLovera/tp0)**  
 
-a. ¿Para que sirve Valgrind? ¿Cuales son sus opciones mas comunes?
-Valgrind es un conjunto de herramientas que pueden ser utilizadas para debugging (correccion de errores) o 
-profiling (analisis de rendimiento) de un programa.
-Las tools (herramientas) mas comunes son:
-- Memcheck: Detecta errores relacionados a la memoria. Posiblemente sea la opcion mas comun pues es la herramienta que se utiliza
-por defecto cuando se ejecuta un programa con valgrind y ademas es muy comun en C/C++ que los programadores olviden liberar memoria 
-solicitada dinamicamenta (problema grave que imposibilita reutilizar estas porciones de memoria mientras el programa se mantenga 
-en ejecución). 
-- Cachegrind: Herramienta de profiling que ayuda al programador a conocer como comportan las memorias caches del procesador en la 
-ejecucion de un programa.
+---
+### INTRODUCCION ###  
+
+- [x] Paso 0
+- [ ] Paso 1
+- [ ] Paso 2
+
+---
+### DESARROLLO ###  
+
+### Paso 0: Entorno de Trabajo ###  
+Se crea un programa simple que muestra el mensaje "Hola Mundo" el cual se ejecuta con y sin valgrind, los resultados obtenidos fueron:
+
+1. **Ejecución sin valgrind**  
+![Ejecucion sin valgrind](./screenshots/no_valgrind_exe.png)  
+2. **Ejecución con valgrind**  
+![Ejecucion con valgrind](./screenshots/valgrind_exe.png)  
+
+**Preguntas Teóricas**
+
+**a. ¿Para que sirve Valgrind? ¿Cuales son sus opciones mas comunes?** (REVISAR ORTOGRAFIA)  
+> **Valgrind** es un conjunto de herramientas que pueden ser utilizadas para *debugging* (corrección de errores) o *profiling* (análisis de rendimiento) de un programa.  
+> Las *tools* (herramientas) mas comunes son:  
+
+- **Memcheck:** 
+>> Detecta errores relacionados a la memoria. Posiblemente sea la opción mas común pues es la herramienta que se utiliza por defecto cuando se ejecuta un programa  con valgrind y ademas es muy comun en C/C++ que los programadores olviden liberar memoria solicitada dinamicamenta (problema grave que imposibilita reutilizar estas porciones de memoria mientras el programa se mantenga 
+en ejecución).  
+
+- **Cachegrind:**
+>> Herramienta de profiling que ayuda al programador a conocer como comportan las memorias caches del procesador en la 
+ejecucion de un programa.  
 
 Otras herramientas menos comunes o al menos desconocidas para el autor de este texto son:
-- Callgrind: Recolecta información sobre los llamados a funciones en un programa.
-- Helgrind: Detecta errores en la ejecucion de threads de un programa.
-- DRD: Otra opcion para deteccion de errores en threads.
-- Massif: Analiza el uso del Heap (area de memoria dinamica).
-- DHAT: Otro analizador del Heap.
+- **Callgrind:**
+>> Recolecta información sobre los llamados a funciones en un programa.  
+- **Helgrind:**
+>> Detecta errores en la ejecucion de threads de un programa.  
+- **DRD:**
+>> Otra opcion para deteccion de errores en threads.  
+- **Massif:**
+>> Analiza el uso del Heap (area de memoria dinamica).  
+- **DHAT:**
+>> Es otra herramienta para analizar el Heap.  
 
 La ejecucion de valgrind en linea de comando es de la forma: valgrind --tool<toolname> ./programa_ejecutable
 
