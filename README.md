@@ -25,7 +25,7 @@ Se crea un programa simple que muestra el mensaje "Hola Mundo" el cual se ejecut
 
 **a. ¿Para que sirve Valgrind? ¿Cuales son sus opciones mas comunes?**   
 > **Valgrind** es un conjunto de herramientas que pueden ser utilizadas para *debugging* (corrección de errores) o *profiling* (análisis de rendimiento) de un programa y su ejecucion en línea de comando es de la forma: valgrind --tool<toolname> ./programa_ejecutable.  
-> Las herramientas mas comunes son:  
+Las herramientas mas comunes son:  
 
 - **Memcheck:** 
 Detecta errores relacionados a la memoria. Posiblemente sea la opción mas común pues es la herramienta que se utiliza por defecto cuando se ejecuta un programa  con valgrind y ademas es muy común en C/C++ que los programadores olviden liberar memoria solicitada dinamicamente (problema grave que imposibilita reutilizar estas porciones de memoria mientras el programa se mantenga en ejecución).  
@@ -69,13 +69,13 @@ Este caso es similar al anterior, pero los char a y b se pueden colocar uno al l
 
 **d. Investigar la existencia de los archivos estandar: STDIN, STDOUT, STDERR. Explicar brevemente su uso y como 
 redirigirlos en caso de ser necesario (caracteres > y <) y como conectar la salida estándar de un proceso a la
-entrada estadar de otro con un pipe (caracter |)**  
+entrada estándar de otro con un pipe (caracter |)**  
 > Todos los programas que se ejecuten en UNIX's comienzan con 3 canales abiertos para transferencias de datos, es decir uno para la entrada, otro de salida y el último es de salida tambien pero en caso de errores en la ejecución del programa, al término del programa estos canales se cierran automáticamente. Los archivos estandar STDIN, STDOUT, STDERR son descriptores de archivos (son valores de tipo int en C/C++ que sirven como clave para que internamente se reconozca a que tendrá acceso el proceso que se esta ejecutando), estos son estándar porque los valores que se le asignan a cada uno son: STDIN = 0, STDOUT = 1, STDOUT = 2.
 Por defecto la entrada estándar representa a los flujos de datos proveniente del teclado y la salida estandár común/errores representa al flujo de datos que se dirige a la pantalla y se utilizan para ingresar datos que pueda requerir un programa o para extraerlos de el.  
 
 Ejemplos de como redirigir los archivos estandar por CLI:
 
-1. **echo "Hola Mundo" > example.txt**
-2. **grep < example "Hola"**
+1. **echo "Hola Mundo" > example.txt** 
+2. **grep < example "Hola"** 
 3. **ls non_existing_command >> error_example.txt**
 4. **echo "Hola Mundo" | grep "Hola"**
