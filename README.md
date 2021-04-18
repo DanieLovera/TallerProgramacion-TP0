@@ -81,4 +81,27 @@ Ejemplos de como redirigir los archivos estandar por CLI:
 4. **echo "Hola Mundo" | grep "Hola"**  
 
 ### Paso 1: SERCOM - Errores de generación y normas de programación ###
-LALALALALA
+Se entregaron los modulos correspondientes a la primera entrega en el SERCOM, y este reportó multiples errores por fallas en compilación y discrepancias entre las normas del cpplint.  
+
+**Documentación de errores**  
+
+```  
+/task/student//source_unsafe/paso1_wordscounter.c:27:  Missing space before ( in while(  [whitespace/parens] [5]
+/task/student//source_unsafe/paso1_wordscounter.c:41:  Mismatching spaces inside () in if  [whitespace/parens] [5]
+/task/student//source_unsafe/paso1_wordscounter.c:41:  Should have zero or one spaces inside ( and ) in if  [whitespace/parens] [5]
+/task/student//source_unsafe/paso1_wordscounter.c:47:  An else should appear on the same line as the preceding }  [whitespace/newline] [4]
+/task/student//source_unsafe/paso1_wordscounter.c:47:  If an else has a brace on one side, it should have it on both  [readability/braces] [5]
+/task/student//source_unsafe/paso1_wordscounter.c:48:  Missing space before ( in if(  [whitespace/parens] [5]
+/task/student//source_unsafe/paso1_wordscounter.c:53:  Extra space before last semicolon. If this should be an empty statement, use {} instead.  [whitespace/semicolon] [5]
+/task/student//source_unsafe/paso1_main.c:12:  Almost always, snprintf is better than strcpy  [runtime/printf] [4]
+/task/student//source_unsafe/paso1_main.c:15:  An else should appear on the same line as the preceding }  [whitespace/newline] [4]
+/task/student//source_unsafe/paso1_main.c:15:  If an else has a brace on one side, it should have it on both  [readability/braces] [5]
+/task/student//source_unsafe/paso1_wordscounter.h:5:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+Done processing /task/student//source_unsafe/paso1_wordscounter.c
+Done processing /task/student//source_unsafe/paso1_main.c
+Done processing /task/student//source_unsafe/paso1_wordscounter.h
+Total errors found: 11
+```
+
+
+
