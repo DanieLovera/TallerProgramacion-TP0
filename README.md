@@ -25,6 +25,7 @@ Se crea un programa simple que muestra el mensaje "Hola Mundo" el cual se ejecut
 
 **a. ¿Para que sirve Valgrind? ¿Cuales son sus opciones mas comunes?**   
 > **Valgrind** es un conjunto de herramientas que pueden ser utilizadas para *debugging* (corrección de errores) o *profiling* (análisis de rendimiento) de un programa y su ejecucion en línea de comando es de la forma: valgrind --tool<toolname> ./programa_ejecutable.  
+ 
 Las herramientas mas comunes son:  
 
 - **Memcheck:** 
@@ -61,15 +62,13 @@ hacer calculos especiales para leer un dato, o podría no alinearlos y trabajar 
 
 Tomando en cuenta el caso del compilador sin compactar los datos, los resultados serían:  
 
-- **sizeof(foo)** = (1 + 3 bytes de padding) + 4 + (1 + 3 bytes de padding) = **12**  
+- **sizeof(struct foo)** = (1 + 3 bytes de padding) + 4 + (1 + 3 bytes de padding) = **12**  
 La explicación a esto es que un entero no podría ser colocado en la posición de memoria siguiente al char porque deben estar alineados a posiciones de memoria multiplos de 4. Considerando que el char estuviera en la posicion 0, el int debe ir en la posición 4 y dejar el padding en las posiciones 1,2 y 3, el último char tambien deja un padding de 3 bytes.
 
-- **sizeof(bar)** = (1 + 1 + 2 bytes de padding) + 4 = **8**  
+- **sizeof(struct bar)** = (1 + 1 + 2 bytes de padding) + 4 = **8**  
 Este caso es similar al anterior, pero los char a y b se pueden colocar uno al lado de otro y esto desperdiciaría menos memoria que caso anterior.
 
-**d. Investigar la existencia de los archivos estandar: STDIN, STDOUT, STDERR. Explicar brevemente su uso y como 
-redirigirlos en caso de ser necesario (caracteres > y <) y como conectar la salida estándar de un proceso a la
-entrada estándar de otro con un pipe (caracter |)**  
+**d. Investigar la existencia de los archivos estandar: STDIN, STDOUT, STDERR. Explicar brevemente su uso y como redirigirlos en caso de ser necesario (caracteres > y <) y como conectar la salida estándar de un proceso a la entrada estándar de otro con un pipe (caracter |)**  
 > Todos los programas que se ejecuten en UNIX's comienzan con 3 canales abiertos para transferencias de datos, es decir uno para la entrada, otro de salida y el último es de salida tambien pero en caso de errores en la ejecución del programa, al término del programa estos canales se cierran automáticamente. Los archivos estandar STDIN, STDOUT, STDERR son descriptores de archivos (son valores de tipo int en C/C++ que sirven como clave para que internamente se reconozca a que tendrá acceso el proceso que se esta ejecutando), estos son estándar porque los valores que se le asignan a cada uno son: STDIN = 0, STDOUT = 1, STDOUT = 2.
 Por defecto la entrada estándar representa a los flujos de datos proveniente del teclado y la salida estandár común/errores representa al flujo de datos que se dirige a la pantalla y se utilizan para ingresar datos que pueda requerir un programa o para extraerlos de el.  
 
