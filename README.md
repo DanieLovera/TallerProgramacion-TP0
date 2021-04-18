@@ -7,7 +7,7 @@
 ### INTRODUCCION ###  
 
 - [x] Paso 0
-- [ ] Paso 1
+- [x] Paso 1
 - [ ] Paso 2
 
 ---
@@ -86,7 +86,7 @@ Se entregaron los módulos correspondientes a la primera entrega en el SERCOM, e
 **Documentación de errores**  
 Descripción de errores generados por el SERCOM.
 
-- **a. Problemas de estilo (cpplint)**  
+**a. Problemas de estilo (cpplint)**  
 ```  
 1.    /task/student//source_unsafe/paso1_wordscounter.c:27:  Missing space before ( in while(  [whitespace/parens] [5]
 2.    /task/student//source_unsafe/paso1_wordscounter.c:41:  Mismatching spaces inside () in if  [whitespace/parens] [5]
@@ -120,7 +120,7 @@ A continuación se detallan los errores de la forma [**Descripción**/**Código 
 10. **If an else has a brace on one side, it should have it on both / }\n else {**: Mismo error que en el (5).  
 11. **Lines should be <= 80 characters long / //Tipo wordscounter_t: almacena la cantidad de palabras procesadas de un archivo**: Indica que las líneas de código tienen que contener menos de 81 caracteres. La solución es separar el comentario en dos líneas.  
 
-- **b. Problemas de generación del ejecutable**  
+**b. Problemas de generación del ejecutable**  
 
 ``` 
 cc -Wall -Werror -pedantic -pedantic-errors -O3 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -Dwrapsocks=1 -std=c11 -o paso1_main.o -c paso1_main.c
@@ -142,17 +142,18 @@ paso1_main.c: In function 'main':
       |         ^~~~~~~~~~~~~~~~~~~~
 make: *** [/task/student/MakefileTP0:144: paso1_main.o] Error 1
 ```  
-En este caso es el compilador o linker los que informan los errores, de una forma similar al cpplint, estos errores muchas veces son autodescriptivos, indican el archivo que tiene el problema, la línea en que ocurre, en que caracter de la línea ocurre, y si el problema es un error o un warning junto con la descripción del mismo. **Ejemplo** de como se lee una línea de error:  
+En este caso es el compilador o linker los que informan sobrelos errores de una forma similar al cpplint, estos errores muchas veces son autodescriptivos, e indican el archivo que contiene el problema, la línea en que ocurre, en que caracter de la línea ocurre, y si el problema es un error o un warning junto con la descripción del mismo. **Ejemplo** de como se lee una línea de error:  
 >  nombre_archivo.[extensión_archivo]:[línea_código]:[número_caracter]:[warning/error]:[Descripción]  
 
 A continuación se detallan los errores, estos fueron enumerados para mayor claridad:  
-1. **unknown type name 'wordscounter_t'**: Indica que el tipo de dato **wordscounter_t** es desconocido, nunca fue declarado por lo cual no es posible generar el código objeto. Este es un error que detecta el compilador.
+1. **unknown type name 'wordscounter_t'**: Indica que el tipo de dato **wordscounter_t** es desconocido, nunca fue definido por lo tanto el compilador no puede saber cuando espacio necesita reservar en el stack y no le sera posible generar código objeto. Este es un error que detecta el compilador.
 2. **implicit declaration of function 'wordscounter_create'**: Indica que hay una declaración implicita de la funcion **wordscounter_create**, es decir que no se puede generar código ejecutable porque no le hemos asegurado al compilador la existencia de dicha función. Este es un error que detecta el compilador.  
 3. **implicit declaration of function 'wordscounter_process'**: Es el mismo error que en (2).  
 4. **implicit declaration of function 'wordscounter_get_words'**: Es el mismo error que en (2) y (3).  
 5. **implicit declaration of function 'wordscounter_destroy'**: Es el mismo error que en (2), (3) y (4).  
+En estos casos todos fueron errores de compilación, 
 
 **c. ¿El sistema reportó algún WARNING? ¿Por qué?**  
-> Los errores del 2 al 5 en realidad son warnings que se estan considerando como errores porque así se le indica al compilador que lo haga (**flag Werror**), es decir realmente no serían un inconveniente para que se generará el código objeto, no obstante los warnings son posibles errores en tiempo de ejecución y no es recomendable dejarlos pasar pues es mas fácil corregir errores en compilación que hacerlo con un debugger en ejecución.
+> El sistema no reportó ningún warning, todos fueron errores, sin embargo los errores del 2 al 5 en realidad son warnings que se estan considerando como errores porque así se le indica al compilador que lo haga (**flag Werror**), es decir realmente no serían un inconveniente para que se generará el código objeto, no obstante los warnings son posibles errores en tiempo de ejecución y no es recomendable dejarlos pasar pues es mas fácil corregir errores en compilación que hacerlo con un debugger en ejecución.
 
 
