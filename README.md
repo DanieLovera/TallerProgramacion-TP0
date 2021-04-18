@@ -151,7 +151,6 @@ A continuación se detallan los errores, estos fueron enumerados para mayor clar
 3. **implicit declaration of function 'wordscounter_process'**: Es el mismo error que en (2).  
 4. **implicit declaration of function 'wordscounter_get_words'**: Es el mismo error que en (2) y (3).  
 5. **implicit declaration of function 'wordscounter_destroy'**: Es el mismo error que en (2), (3) y (4).  
-En estos casos todos fueron errores de compilación, 
 
 **c. ¿El sistema reportó algún WARNING? ¿Por qué?**  
 > El sistema no reportó ningún warning, todos fueron errores, sin embargo los errores del 2 al 5 en realidad son warnings que se estan considerando como errores porque así se le indica al compilador que lo haga (**flag Werror**), es decir realmente no serían un inconveniente para que se generará el código objeto, no obstante los warnings son posibles errores en tiempo de ejecución y no es recomendable dejarlos pasar pues es mas fácil corregir errores en compilación que hacerlo con un debugger en ejecución.
