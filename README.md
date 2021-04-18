@@ -25,7 +25,7 @@ Se crea un programa simple que muestra el mensaje "Hola Mundo" el cual se ejecut
 **Preguntas Teóricas**
 
 **a. ¿Para que sirve Valgrind? ¿Cuales son sus opciones mas comunes?**   
-> **Valgrind** es un conjunto de herramientas que pueden ser utilizadas para *debugging* (corrección de errores) o *profiling* (análisis de rendimiento) de un programa, su ejecucion en línea de comando es de la forma: valgrind --tool<toolname> ./programa_ejecutable.  
+> **Valgrind** es un conjunto de herramientas que pueden ser utilizadas para *debugging* (corrección de errores) o *profiling* (análisis de rendimiento) de un programa, su ejecución en línea de comando es de la forma: valgrind --tool<toolname> ./programa_ejecutable.  
  
 Las herramientas mas comunes son:  
 
@@ -33,7 +33,7 @@ Las herramientas mas comunes son:
 Detecta errores relacionados a la memoria. Posiblemente sea la opción mas común pues es la herramienta que se utiliza por defecto cuando se ejecuta un programa  con valgrind y ademas es muy común en C/C++ que los programadores olviden liberar memoria solicitada dinamicamente (problema grave que imposibilita reutilizar estas porciones de memoria mientras el programa se mantenga en ejecución).  
 
 - **Cachegrind:**
-Herramienta de profiling que ayuda al programador a conocer como comportan las memorias caches del procesador en la ejecución de un programa.  
+Herramienta de profiling que ayuda al programador a conocer como se comportan las memorias caches del procesador en la ejecución de un programa.  
 
 Otras herramientas menos comunes o al menos desconocidas para el autor de este texto son:
 - **Callgrind:**
