@@ -3,21 +3,17 @@
 **N° padrón: 103442**  
 **[https://github.com/DanieLovera/tp0](https://github.com/DanieLovera/tp0)**  
 
-**Índice**   
-1. [Primer apartado](#id1)
-2. [Segundo apartado](#id2)
-
 ---
-### INTRODUCCION ###  <a name="id1"></a> 
+### INTRODUCCION ###  
 
 - [x] Paso 0
 - [ ] Paso 1
 - [ ] Paso 2
 
 ---
-### DESARROLLO ###  <a name="id2"></a>  
+### DESARROLLO ###   
 
-### Paso 0: Entorno de Trabajo ### <a name="id1"></a>
+### Paso 0: Entorno de Trabajo ###  
 Se crea un programa simple que muestra el mensaje "Hola Mundo" el cual se ejecuta con y sin valgrind, los resultados obtenidos fueron:
 
 1. **Ejecución sin valgrind**  
