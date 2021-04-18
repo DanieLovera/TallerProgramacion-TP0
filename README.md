@@ -86,7 +86,7 @@ Se entregaron los módulos correspondientes a la primera entrega en el SERCOM, e
 **Documentación de errores**  
 Descripción de errores generados por el SERCOM.
 
-- **Problemas de estilo (cpplint)**  
+- **a. Problemas de estilo (cpplint)**  
 ```  
 1.    /task/student//source_unsafe/paso1_wordscounter.c:27:  Missing space before ( in while(  [whitespace/parens] [5]
 2.    /task/student//source_unsafe/paso1_wordscounter.c:41:  Mismatching spaces inside () in if  [whitespace/parens] [5]
@@ -104,10 +104,10 @@ Descripción de errores generados por el SERCOM.
     Done processing /task/student//source_unsafe/paso1_wordscounter.h
     Total errors found: 11
 ```  
-Los **problemas encontrados** fueron numerados para mayor claridad, estos son bastante descriptivos ya que informan la ruta del archivo que tiene el problema, la línea de código de donde se encuentra y ademas el detalle del mismo. **Ejemplo** de como se lee una línea de error:  
+Los **problemas encontrados** son bastante descriptivos ya que informan la ruta del archivo que contiene el problema, la línea de código de donde se encuentra y ademas el detalle del mismo. **Ejemplo** de como se lee una línea de error:  
 >  ruta_archivo/nombre_archivo.[extensión_archivo]:[línea_código]: [Descripción]  
 
-A continuación se detallan los errores de la forma [Descripción/Código que lo genera]:  
+A continuación se detallan los errores de la forma [**Descripción**/**Código que lo genera**], estos fueron enumerados para mayor claridad:  
 1. **Missing space before ( in while( / while(state != STATE_FINISHED)**: Indica la **falta de un espacio** antes del párentesis en el while, por lo cual el código que lo soluciona sería while (state != STATE_FINISHED).  
 2. **Mismatching spaces inside () in if / if (  c == EOF) {**: Indica la falta de **paridad** entre los espacios adentro del paréntesis del  if, por lo cual una de las formas de solucionarlo sería if (  c == EOF  ), de forma tal que sean simétricos los espacios en blanco.  
 3. **Should have zero or one spaces inside ( and ) in if / (  c == EOF)**: Indica que debe haber **ningún** o a lo sumo **un** espacio dentro del paréntesis del if, por lo cual una forma de solucionarlo sería if (c == EOF).  
@@ -116,10 +116,43 @@ A continuación se detallan los errores de la forma [Descripción/Código que lo
 6. **Missing space before ( in if( / if(strchr(delim_words, c) != NULL)**: Este error es idéntico al (1), con la salvedad de que es un if y no un while, por lo cual la solución es la misma.  
 7. **Extra space before last semicolon. If this should be an empty statement, use {}  instead. / return next_state ;**: Indica que hay un espacio extra antes del último punto y coma, por lo cual el código que lo soluciona sería return next_state;  
 8. **Almost always, snprintf is better than strcpy  [runtime/printf] / strcpy(filepath, argv[1])**: Indica que la función snprintf es mejor que strcpy, esto es porque strcpy es una función insegura ya que no tiene control de cuantos datos escribe en un buffer. La solución es usar la funcion que recomienda o usar strncpy que soluciona el problema del tamaño del buffer tambien.  
-9. **An else should appear on the same line as the preceding } / }\n else { **: Mismo error que el (4).  
+9. **An else should appear on the same line as the preceding } / }\n else {**: Mismo error que el (4).  
 10. **If an else has a brace on one side, it should have it on both / }\n else {**: Mismo error que en el (5).  
-11. **Lines should be <= 80 characters long / //Tipo wordscounter_t: almacena la cantidad de palabras procesadas de un archivo.**: Indica que las líneas de código tienen que contener menos de 81 caracteres. La solución es separar el comentario en dos líneas.
+11. **Lines should be <= 80 characters long / //Tipo wordscounter_t: almacena la cantidad de palabras procesadas de un archivo**: Indica que las líneas de código tienen que contener menos de 81 caracteres. La solución es separar el comentario en dos líneas.  
 
+- **b. Problemas de generación del ejecutable**  
 
+``` 
+cc -Wall -Werror -pedantic -pedantic-errors -O3 -ggdb -DDEBUG -fno-inline -D _POSIX_C_SOURCE=200809L -Dwrapsocks=1 -std=c11 -o paso1_main.o -c paso1_main.c
+paso1_main.c: In function 'main':
+1. paso1_main.c:22:9: error: unknown type name 'wordscounter_t'
+   22 |         wordscounter_t counter;
+      |         ^~~~~~~~~~~~~~
+2. paso1_main.c:23:9: error: implicit declaration of function 'wordscounter_create' [-Wimplicit-function-declaration]
+   23 |         wordscounter_create(&counter);
+      |         ^~~~~~~~~~~~~~~~~~~
+3. paso1_main.c:24:9: error: implicit declaration of function 'wordscounter_process' [-Wimplicit-function-declaration]
+   24 |         wordscounter_process(&counter, input);
+      |         ^~~~~~~~~~~~~~~~~~~~
+4. paso1_main.c:25:24: error: implicit declaration of function 'wordscounter_get_words' [-Wimplicit-function-declaration]
+   25 |         size_t words = wordscounter_get_words(&counter);
+      |                        ^~~~~~~~~~~~~~~~~~~~~~
+5. paso1_main.c:27:9: error: implicit declaration of function 'wordscounter_destroy' [-Wimplicit-function-declaration]
+   27 |         wordscounter_destroy(&counter);
+      |         ^~~~~~~~~~~~~~~~~~~~
+make: *** [/task/student/MakefileTP0:144: paso1_main.o] Error 1
+```  
+En este caso es el compilador o linker los que informan los errores, de una forma similar al cpplint, estos errores muchas veces son autodescriptivos, indican el archivo que tiene el problema, la línea en que ocurre, en que caracter de la línea ocurre, y si el problema es un error o un warning junto con la descripción del mismo. **Ejemplo** de como se lee una línea de error:  
+>  nombre_archivo.[extensión_archivo]:[línea_código]:[número_caracter]:[warning/error]:[Descripción]  
+
+A continuación se detallan los errores, estos fueron enumerados para mayor claridad:  
+1. **unknown type name 'wordscounter_t'**: Indica que el tipo de dato **wordscounter_t** es desconocido, nunca fue declarado por lo cual no es posible generar el código objeto. Este es un error que detecta el compilador.
+2. **implicit declaration of function 'wordscounter_create'**: Indica que hay una declaración implicita de la funcion **wordscounter_create**, es decir que no se puede generar código ejecutable porque no le hemos asegurado al compilador la existencia de dicha función. Este es un error que detecta el compilador.  
+3. **implicit declaration of function 'wordscounter_process'**: Es el mismo error que en (2).  
+4. **implicit declaration of function 'wordscounter_get_words'**: Es el mismo error que en (2) y (3).  
+5. **implicit declaration of function 'wordscounter_destroy'**: Es el mismo error que en (2), (3) y (4).  
+
+**c. ¿El sistema reportó algún WARNING? ¿Por qué?**  
+> Los errores del 2 al 5 en realidad son warnings que se estan considerando como errores porque así se le indica al compilador que lo haga (**flag Werror**), es decir realmente no serían un inconveniente para que se generará el código objeto, no obstante los warnings son posibles errores en tiempo de ejecución y no es recomendable dejarlos pasar pues es mas fácil corregir errores en compilación que hacerlo con un debugger en ejecución.
 
 
