@@ -598,12 +598,15 @@ Con respecto al paso anterior se actualizaron los headers, se definio una consta
 
 ---
 
-### Conclusiones ###
+### Conclusiones ###  
+  
 
 
 
-
-
+---
+### Aclaraciones ###  
+- No se encontró la carátula de la cátedra y por eso no fue incluida en la presentación del trabajo.
+- El paso 7, no se incorporo en el informe por ser unicamente pruebas locales.  
 
  
 
