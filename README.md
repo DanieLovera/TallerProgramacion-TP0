@@ -98,7 +98,7 @@ Ejemplos de como redirigir los archivos estandar por CLI:
 3. **ls non_existing_command >> error_example.txt**
 4. **echo "Hola Mundo" | grep "Hola"**  
 
-### Paso 1: SERCOM - Errores de generación y normas de programación ###
+#### Paso 1: SERCOM - Errores de generación y normas de programación ####
 Se entregaron los módulos correspondientes a la primera entrega en el SERCOM, este reportó multiples errores por fallas en compilación y discrepancias con respecto a las normas de cpplint.  
 
 **Documentación de errores**  
@@ -173,7 +173,7 @@ A continuación se detallan los errores, estos fueron enumerados para mayor clar
 **c. ¿El sistema reportó algún WARNING? ¿Por qué?**  
 > El sistema no reportó ningún warning, todos fueron errores, sin embargo los errores del 2 al 5 en realidad son warnings que se estan considerando como errores porque así se le indica al compilador que lo haga (**flag Werror**), es decir realmente no serían un inconveniente para que se generará el código objeto, no obstante los warnings son posibles errores en tiempo de ejecución y no es recomendable dejarlos pasar pues es mas fácil corregir errores en compilación que hacerlo con un debugger en ejecución.  
 
-## Paso 2: SERCOM - Errores de generación 2 ##  
+#### Paso 2: SERCOM - Errores de generación 2 ####  
 Se entregaron los módulos correspondientes a la segunda entrega en el SERCOM, este no reporto errores de estilo por cpplint, pero incrementaron lo errores por parte del compilador.  
 
 **Documentación de errores**  
@@ -279,7 +279,7 @@ Solo se reportó un error al momento de generar el ejecutable:
 2. Revisando el proceso de compilación que se llevo acabo, se observa que las primeras 4 líneas corresponden a llamados al compilador para llevar los archivos **paso3_wordscounter.c** y **paso3_main.c** a código objeto por separado (flag **-c**), pero la línea 5 es una instrucción diferente, se le esta pidiendo al compilador que cree un ejecutable linkeando los códigos objetos que recién generó, es por eso el llamado al linker (**/usr/bin/ld**) genera un error en la función que se definió como ***"main"*** internamente en el código assembly.  
 3. El error reportado, según el informe, es generado por el linker (**error: ld returned 1 exit status**), el código de que devuelve al momento de salir del proceso es 1 de error.  
 
-## Paso 4: SERCOM - Memory Leaks y Buffer Overflows ##  
+#### Paso 4: SERCOM - Memory Leaks y Buffer Overflows ####  
 Se entregaron los módulos correspondientes a la cuarta entrega en el SERCOM, no se encontraron errores de compilación, linkeo o de estilo pero el programa no funciona como debería.
 
 **a. Descripción de los cambios realizados con respecto a la versión del paso 3.**  
@@ -461,7 +461,7 @@ e. **Explicar de qué se trata un segmentation fault y un buffer overflow**
 - **Segmentation fault**: La memoria suele dividirse en segmentos y páginas, cada proceso que ejecuta el procesador tiene reservada uno o varios de estos segmentos o páginas. Segmentation fault ocurre cuando un proceso esta intentando acceder a un segmento de memoria que no le corresponde ya que no fue reservado para el, suele ser muy común cuando trabajamos con buffers ya que muchas veces podemos pasar los límites de estos hasta llegar a pisar la posición de memoria que contiene la dirección de retorno de la rutina que se esta ejecutando causando que al retornar el programa vuelva a una dirección de memoria que muy probablemente sea basura o simplemente este ocupada por otro programa que se este ejecutando.  
 - **Buffer overflow**: Ocurre cuando nos pasamos de los límites de un buffer con el que estemos trabajando, este problema no necesariamente causara la interrumpción abrupta del programa que se esta ejecutando(creería depende tambien depende de si se desactiva la protección que el compilador le da al stack al compilar un programa). Los datos del programa se pueden corromper sin que este se entere.  
 
-## Paso 5: SERCOM - Código de retorno y salida estándar ##  
+#### Paso 5: SERCOM - Código de retorno y salida estándar ####  
 Se entregaron los módulos correspondientes a la quinta entrega en el SERCOM, no se encontraron errores de compilación, linkeo o de estilo pero aún no pasan todas las pruebas requeridas. 
 
 **a. Descripción de los cambios realizados con respecto a la versión del paso 4.**  
@@ -590,7 +590,7 @@ Starting program: /home/daniel/Documents/taller_programacion_I/tp0/pasos/tp inpu
 
 > El debugger no se detuvo porque la función esta dentro de un estructura condicional, la única forma que se detenga es que el programa no salte ese bloque de código. Nótese que ahi esta el bug por el cual no cuenta 1 palabra en el archivo sino 0, nunca entra en la porción de código que controla el contador (en donde esta el breakpoint), para que esto suceda necesita encontrar un caracter delimitador en el texto y ya se observó en el punto **c** que el archivo cuenta con 4 caractéres de los cuales ninguno es delimitador, encuentra primero el EOF antes que alguno de estos y no alcanza a contar la palabra.
 
-## Paso 6: SERCOM - Entrega exitosa ##  
+#### Paso 6: SERCOM - Entrega exitosa ####  
 Se entregaron los módulos correspondientes a la sexta entrega en el SERCOM, no se encontraron errores de compilación, linkeo o de estilo pero aún no pasan todas las pruebas requeridas. 
 
 **a. Descripción de los cambios realizados con respecto a la versión del paso 5.**  
