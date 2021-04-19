@@ -248,7 +248,7 @@ A continuación se detallan los errores, estos fueron enumerados para mayor clar
 9. **incompatible implicit declaration of built-in function 'malloc'**: Indica que la misma función del error (8) genera otro problema, el compilador no sabe si la definición implícita empareja con el tipo de dato al que se quiere asignar (char*) en el momento de retornar. Este igualmente es un warning tratado como error.    
 10. **include '<stdlib.h>' or provide a declaration of 'malloc'**: El compilador esta nuevamente sugiriendo que incluyamos la libreria que contiene la declaración de **malloc**.  
 
-## Paso 3: SERCOM - Errores de generación 3 ##  
+#### Paso 3: SERCOM - Errores de generación 3 ####  
 Se entregaron los módulos correspondientes a la tercera entrega en el SERCOM, y decrementaron los errores del compilador.  
 
 **Documentación de errores**  
