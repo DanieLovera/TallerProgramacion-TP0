@@ -128,7 +128,7 @@ A continuación se detallan los errores de la forma [**Descripción**/**Código 
 2. **Mismatching spaces inside () in if / if (  c == EOF) {**: Indica la falta de **paridad** entre los espacios adentro del paréntesis del  if, por lo cual una de las formas de solucionarlo sería if (  c == EOF  ), de forma tal que sean simétricos los espacios en blanco.  
 3. **Should have zero or one spaces inside ( and ) in if / (  c == EOF)**: Indica que debe haber **ningún** o a lo sumo **un** espacio dentro del paréntesis del if, por lo cual una forma de solucionarlo sería if (c == EOF).  
 4. **An else should appear on the same line as the preceding } / }\n else if (state == STATE_IN_WORD) {**: Indica que **un else debe aparecer** en la misma línea que la llave que lo precede, por lo cual la forma de solucionarlo es } else if (state == STATE_IN_WORD) {, es decir deben estar alineados la llave y el else.  
-5. **If an else has a brace on one side, it should have it on both / }\n else if (state == STATE_IN_WORD) {**: Indica que **si un else** tiene una llave de un lado, **entonces** debe tenerlo tambien en el lado opuesto, por lo cual la forma de solucionarlo es igual al anterior (4), ya que en este caso la llave que no empareja es la que precede al else. *Observación: localmente cpplint junto con el script provisto por la cátedra no reconoce este como un error.*  
+5. **If an else has a brace on one side, it should have it on both / }\n else if (state == STATE_IN_WORD) {**: Indica que **si un else** tiene una llave de un lado, **entonces** debe tenerlo también en el lado opuesto, por lo cual la forma de solucionarlo es igual al anterior (4), ya que en este caso la llave que no empareja es la que precede al else. *Observación: localmente cpplint junto con el script provisto por la cátedra no reconoce este como un error.*  
 6. **Missing space before ( in if( / if(strchr(delim_words, c) != NULL)**: Este error es idéntico al (1), con la salvedad de que es un if y no un while, por lo cual la solución es la misma.  
 7. **Extra space before last semicolon. If this should be an empty statement, use {}  instead. / return next_state ;**: Indica que hay un espacio extra antes del último punto y coma, por lo cual el código que lo soluciona sería return next_state;  
 8. **Almost always, snprintf is better than strcpy  [runtime/printf] / strcpy(filepath, argv[1])**: Indica que la función snprintf es mejor que strcpy, esto es porque strcpy es una función insegura ya que no tiene control de cuantos datos escribe en un buffer(copia todos los datos del fuente). La solución es usar la función que recomienda o usar strncpy que también soluciona el problema del tamaño del buffer.  
@@ -162,17 +162,17 @@ En este caso es el compilador el que informa sobre los errores de una forma simi
 >  nombre_archivo.[extensión_archivo]:[línea_código]:[número_caracter]:[warning/error]:[Descripción]  
 
 A continuación se detallan los errores, estos fueron enumerados para mayor claridad y no forman parte de la salida orginal.  
-1. **unknown type name 'wordscounter_t'**: Indica que el tipo de dato **wordscounter_t** es desconocido, nunca fue definido por lo tanto el compilador no puede saber cuando espacio necesita reservar en el stack y no le sera posible generar código objeto. Este es un error que detecta el compilador.
-2. **implicit declaration of function 'wordscounter_create'**: Indica que hay una declaración implicita de la funcion **wordscounter_create**, es decir que no se puede generar código ejecutable porque no le hemos asegurado al compilador la existencia de dicha función. Este es un error que detecta el compilador.  
+1. **unknown type name 'wordscounter_t'**: Indica que el tipo de dato **wordscounter_t** es desconocido, nunca fue definido, por lo tanto el compilador no puede saber cuando espacio necesita reservar en el stack y no le será posible generar código objeto. Este es un error que detecta el compilador.
+2. **implicit declaration of function 'wordscounter_create'**: Indica que hay una declaración implícita de la función **wordscounter_create**, es decir que no se puede generar código ejecutable porque no le hemos asegurado al compilador la existencia de dicha función. Este es un error que detecta el compilador.  
 3. **implicit declaration of function 'wordscounter_process'**: Es el mismo error que en (2).  
 4. **implicit declaration of function 'wordscounter_get_words'**: Es el mismo error que en (2) y (3).  
 5. **implicit declaration of function 'wordscounter_destroy'**: Es el mismo error que en (2), (3) y (4).  
 
 **c. ¿El sistema reportó algún WARNING? ¿Por qué?**  
-> El sistema no reportó ningún warning, todos fueron errores, sin embargo los errores del 2 al 5 en realidad son warnings que se estan considerando como errores porque así se le indica al compilador que lo haga (**flag Werror**), es decir realmente no serían un inconveniente para que se generará el código objeto, no obstante los warnings son posibles errores en tiempo de ejecución y no es recomendable dejarlos pasar pues es mas fácil corregir errores en compilación que hacerlo con un debugger en ejecución.  
+> El sistema no reportó ningún warning, todos fueron errores, sin embargo los errores del 2 al 5 en realidad son warnings que se estan considerando como errores porque así se le indica al compilador que lo haga (**flag Werror**), es decir realmente no serían un inconveniente para que se generará el código objeto, no obstante los warnings son posibles errores en tiempo de ejecución y no es recomendable dejarlos pasar pues es más fácil corregir errores en compilación que hacerlo con un debugger en ejecución.  
 
 #### Paso 2: SERCOM - Errores de generación 2 ####  
-Se entregaron los módulos correspondientes a la segunda entrega en el SERCOM, este no reporto errores de estilo por cpplint, pero incrementaron lo errores por parte del compilador.  
+Se entregaron los módulos correspondientes a la segunda entrega en el SERCOM, este no reportó errores de estilo por cpplint, pero incrementaron lo errores por parte del compilador.  
 
 **Documentación de errores**  
 
@@ -182,9 +182,9 @@ Se entregaron los módulos correspondientes a la segunda entrega en el SERCOM, e
   
 ![Ejecucion del comando diff](./screenshots/diff_command.png)  
   
-Se puede observar como en cada archivo .c se incluyeron los .h que contenian las definiciones de funciones requeridas por el compilador, se corrigieron los espacios en blanco extras, adicionalmente se alinearon los else e ifs con sus llaves predecesoras, se redujo la cantidad de carácteres contenidos en el comentario del archivo de cabecera a menos de 81 y se reemplazo la función insegura strcpy por memcpy. Estas modificaciones corrigieron los problemas de estilos reportados por cpplint. **Ejemplo** de como interpretar el comando **diff**:    
-> **[num_lineas_archivo1][acción][num_lineas_archivo2]**. Siendo la acción alguno de los siguientes caractéres: **a**(add), **c**(change) o **d**(delete).  
-> Entonces la primera indicación del comando diff se leería:  
+Se puede observar como en cada archivo .c se incluyeron los .h que contenían las definiciones de funciones requeridas por el compilador, se corrigieron los espacios en blanco extras, alinearon los else e ifs con sus llaves predecesoras, redujo la cantidad de caracteres contenidos en el comentario del archivo de cabecera a menos de 81 y se reemplazó la función insegura strcpy por memcpy. Estas modificaciones corrigieron los problemas de estilos reportados por cpplint. **Ejemplo** de como interpretar el comando **diff**:    
+> **[num_líneas_archivo1][acción][num_líneas_archivo2]**. Siendo la acción alguno de los siguientes caractéres: **a**(add), **c**(change) o **d**(delete).  
+> Entonces la primera indicación del comando diff se leería como:  
 > Después de la línea 3 del del primer archivo se debe cambiar la función strcpy por memcpy para que ambos archivos sean iguales en la línea 4.  
 
 **b. Correcta ejecución de las normas de programación (cpplint).**  
@@ -236,15 +236,15 @@ make: *** [/task/student/MakefileTP0:144: paso2_wordscounter.o] Error 1
 ```
 A continuación se detallan los errores, estos fueron enumerados para mayor claridad y no forman parte de la salida orginal.  
 1. **unknown type name 'size_t'**: Indica que el tipo de dato size_t es desconocido, esto es un error que detecta el compilador ya que no puede reservar espacio en memoria para la variable.  
-2. **unknown type name 'size_t'**: Es el mismo error que (1), mientras no encuentre una definición seguira ocurriendo.  
-3. **'size_t' is defined in header '<stddef.h>'; did you forget to '#include stddef.h'**: En este caso el compilador detecto que se esta haciendo uso de un tipo de dato que se encuentra definido en la libreria **stddef.h** y esta haciendo una forma de recordatorio para que sea incluido.  
+2. **unknown type name 'size_t'**: Es el mismo error que (1), mientras no encuentre una definición seguirá ocurriendo.  
+3. **'size_t' is defined in header '<stddef.h>'; did you forget to '#include stddef.h'**: En este caso el compilador detecto que se esta haciendo uso de un tipo de dato que se encuentra definido en la librería **stddef.h** y está haciendo una forma de recordatorio para que sea incluido.  
 4. **unknown type name 'FILE'**: Es el mismo error que (1) pero en este caso el compilador no encuentra la definición de FILE.  
-5. **'FILE' is defined in header '<stdio.h>'; did you forget to '#include stdio.h'**: Es la misma sugerencia que (3) pero para el dato **FILE** de la libreria **stdio.h**  
-6. **conflicting types for 'wordscounter_get_words'**: Indica un problema en los tipos de datos declarados en la funcion **wordscounter_get_words** en este caso el tipo es el **size_t**, el compilador no conoce el tipo de dato de retorno, el error del punto (1) empezo a aparecer en varias partes del código.
-7. **previous declaration of 'wordscounter_get_words' was here**: El compilador esta indicando el lugar en donde se declaro la función con el su llamado en el archivo .c.  
-8. **implicit declaration of function 'malloc'**: Indica una declaracion implicita de la función **malloc**, esto es porque no se realizo la declaración de la función y el compilador no tiene asegurada su existencia por lo tanto no compilara el código. Esta siendo considerado como error por el compilador pero es un warning, aunque no le aseguremos la existencia de la función el código podría funcionar y en caso de que realmente no exista una función con esa firma fallar en etapa de **linkeo**.  
+5. **'FILE' is defined in header '<stdio.h>'; did you forget to '#include stdio.h'**: Es la misma sugerencia que (3) pero para el dato **FILE** de la librería **stdio.h**  
+6. **conflicting types for 'wordscounter_get_words'**: Indica un problema en los tipos de datos declarados en la función **wordscounter_get_words**, en este caso el tipo es el **size_t**, el compilador no conoce el tipo de dato de retorno, el error del punto (1) empezo a aparecer en varias partes del código.
+7. **previous declaration of 'wordscounter_get_words' was here**: El compilador esta indicando el lugar en donde se declaró la función con su llamado en el archivo .c.  
+8. **implicit declaration of function 'malloc'**: Indica una declaración implícita de la función **malloc**, esto es porque no se realizó la declaración de la función y el compilador no tiene asegurada su existencia por lo tanto no compilará el código. Esta siendo considerado como error por el compilador pero es un warning, aunque no le aseguremos la existencia de la función el código podría funcionar y en caso de que realmente no exista una función con esa firma fallará en etapa de **linkeo**.  
 9. **incompatible implicit declaration of built-in function 'malloc'**: Indica que la misma función del error (8) genera otro problema, el compilador no sabe si la definición implícita empareja con el tipo de dato al que se quiere asignar (char*) en el momento de retornar. Este igualmente es un warning tratado como error.    
-10. **include '<stdlib.h>' or provide a declaration of 'malloc'**: El compilador esta nuevamente sugiriendo que incluyamos la libreria que contiene la declaración de **malloc**.  
+10. **include '<stdlib.h>' or provide a declaration of 'malloc'**: El compilador esta nuevamente sugiriendo que incluyamos la librería que contiene la declaración de **malloc**.  
 
 #### Paso 3: SERCOM - Errores de generación 3 ####  
 Se entregaron los módulos correspondientes a la tercera entrega en el SERCOM, y decrementaron los errores.  
@@ -271,10 +271,10 @@ collect2: error: ld returned 1 exit status
 make: *** [/task/student/MakefileTP0:135: tp] Error 1
 ```
 Solo se reportó un error al momento de generar el ejecutable:  
-> **undefined reference to `wordscounter_destroy'**: Indica que no se definió una referencia a la función wordscounter_destroy, este es un error en tiempo de linkeo. Esto se puede reconocer por las siguientes formas:  
+> **undefined reference to `wordscounter_destroy'**: Indica que no se definió una referencia a la función wordscounter_destroy, este es un error en tiempo de linkeo y se puede reconocer de las siguientes formas:  
 
 1. El nombre del problema es una pista para entender que el linker lo generó,ya que indica que no encuentra cual es la dirección de memoria a la cual asignarle los llamados que se realizan desde el main.c.  
-2. Revisando el proceso de compilación que se llevo acabo, se observa que las primeras 4 líneas corresponden a llamados al compilador para llevar los archivos **paso3_wordscounter.c** y **paso3_main.c** a código objeto por separado (flag **-c**), pero la línea 5 es una instrucción diferente, se le esta pidiendo al compilador que cree un ejecutable linkeando los códigos objetos que recién generó, es por eso el llamado al linker (**/usr/bin/ld**) genera un error en la función que se definió como ***"main"*** internamente en el código assembly.  
+2. Revisando el proceso de compilación que se llevó acabo, se observa que las primeras 4 líneas corresponden a llamados al compilador para llevar los archivos **paso3_wordscounter.c** y **paso3_main.c** a código objeto por separado (flag **-c**), pero la línea 5 es una instrucción diferente, se le esta pidiendo al compilador que cree un ejecutable linkeando los códigos objetos que recién generó, es por eso que el llamado al linker (**/usr/bin/ld**) genera un error en la función que se definió como ***"main"*** internamente en el código assembly.  
 3. El error reportado, según el informe, es generado por el linker (**error: ld returned 1 exit status**), el código de que devuelve al momento de salir del proceso es 1 de error.  
 
 #### Paso 4: SERCOM - Memory Leaks y Buffer Overflows ####  
@@ -363,7 +363,7 @@ sys     0m0.055s
 ==00:00:00:01.231 60== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 ```
   
-Valgrind detectó 218 alocaciones de memoria dinámica de las cuales libero 2 y se perdieron 216 de esas peticiones, de las cuales 215 fueron perdidas definitivas y 1 es aun adirecciónlcanzable, a continuación se detallan estos errores:    
+Valgrind detectó 218 alocaciones de memoria dinámica de las cuales liberó 2 y se perdieron 216 de esas peticiones, de las cuales 215 fueron pérdidas definitivas y 1 es aún una dirección alcanzable, a continuación se detallan estos errores:    
 
 **Bloques de memoria aún alcanzables**
 ```
@@ -385,7 +385,7 @@ Valgrind detectó 218 alocaciones de memoria dinámica de las cuales libero 2 y 
 ==00:00:00:01.231 60==    by 0x1093B5: wordscounter_process (paso4_wordscounter.c:30)
 ==00:00:00:01.231 60==    by 0x109197: main (paso4_main.c:24)
 ```
-> El segundo error que se registró indica que se perdieron 1505 bytes en 215 peticiones de memoria y se perdieron definitivamente, es decir, en el programa no quedan punteros referenciando a ningún bloque de estos. Es un error mas grave que el anterior y el momento en que se solicita la memoria es en la función **wordscounter_next_state** correspondiente al archivo **paso4_wordscounter.c** en  la línea **35**  
+> El segundo error que se registró indica que se perdieron 1505 bytes en 215 peticiones de memoria y se perdieron definitivamente, es decir, en el programa no quedan punteros referenciando a ningún bloque de estos. Es un error mas grave que el anterior y el momento en que se solicita la memoria es en la función **wordscounter_next_state** correspondiente al archivo **paso4_wordscounter.c** en la línea **35**  
 
 **c. Ejecución con Valgrind de la prueba ‘Long Filename’.**
 ```
@@ -441,7 +441,7 @@ sys     0m0.053s
 ==00:00:00:01.181 48== For lists of detected and suppressed errors, rerun with: -s
 ==00:00:00:01.181 48== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
-Valgrind detectó un unico error de memoria, en este caso no es por pérdidas sino por un buffer overflow, la ultima función que se ejecutó antes del problema fue memcpy la cual copia una cantidad de datos exacta desde un buffer fuente a un destino pero, si el tamaño del buffer destino es menor al del buffer fuente memcpy no lo controla, el comportamiento es indefinido. En este caso se esta intentando copiar algo muy grande en un buffer muy pequeño y se produce un overflow, sin embargo este problema no lo detecta unicamente valgrind y tambien falla la ejecución sin valgrind, de hecho en el registro se observa como se informa el error **memcpy_chk: buffer overflow detected** antes de comenzar siquiera a correr valgrind y por alguna razón continua la ejecución de valgrind y lo detecta tambien.  
+Valgrind detectó un único error de memoria, en este caso no es por pérdidas sino por un buffer overflow, la última función que se ejecutó antes del problema fue memcpy la cual copia una cantidad de datos exacta desde un buffer fuente a un destino, pero si el tamaño del buffer destino es menor al del buffer fuente memcpy no lo controla, el comportamiento es indefinido. En este caso se esta intentando copiar algo muy grande en un buffer muy pequeño y se produce un overflow, sin embargo este problema no lo detecta unicamente valgrind y también falla la ejecución sin valgrind, de hecho en el registro se observa como se informa el error **memcpy_chk: buffer overflow detected** antes de comenzar siquiera a correr valgrind y por alguna razón continua la ejecución de valgrind y lo detecta también.  
   
 **Error memcpy**  
 ```
@@ -453,11 +453,11 @@ Valgrind detectó un unico error de memoria, en este caso no es por pérdidas si
 ```
 
 d. **¿Podría solucionarse este error utilizando la función strncpy? ¿Qué hubiera ocurrido con la ejecución de la prueba?**  
-No, sería lo mismo pues el problema no es la función memcpy sino la cantidad de datos que queremos copiar del buffer mas grande al mas pequeño, si limitamos este valor al tamaño del buffer mas chico entonces el problema del overflow desaparecería porque se truncarían los datos que copia del buffer fuente, claro esta que el comportamiento de la función sería incorrecto pues del nombre del archivo depende la apertura de un recurso. La diferencia entre memcpy y strncpy es que strncpy solo trabaja con cadenas de caracteres además de completar con ceros el buffer destino en caso de que sea mas pequeño que el buffer fuente y memcpy no lo hará, se limitará a copiar exactamente lo que le pidamos, para este problema que enfrentamos no habría diferencia alguna pues precisamente el buffer destino es mas grande y trabajamos con cadenas de caractéres.  
+No, sería lo mismo pues el problema no es la función memcpy sino la cantidad de datos que queremos copiar del buffer mas grande al mas pequeño, si limitamos este valor al tamaño del buffer mas chico entonces el problema del overflow desaparecería porque se truncarían los datos que copia del buffer fuente, claro esta que el comportamiento de la función sería incorrecto pues del nombre del archivo depende la apertura de un recurso. La diferencia entre memcpy y strncpy es que strncpy solo trabaja con cadenas de caracteres además de completar con ceros el buffer destino en caso de que sea mas pequeño que el buffer fuente y memcpy no lo hará, se limitará a copiar exactamente lo que le pidamos, para este problema que enfrentamos no habría diferencia alguna pues precisamente el buffer destino es mas grande y trabajamos con cadenas de caracteres.  
 
 e. **Explicar de qué se trata un segmentation fault y un buffer overflow**  
-- **Segmentation fault**: La memoria suele dividirse en segmentos y páginas, cada proceso que ejecuta el procesador tiene reservada uno o varios de estos segmentos o páginas. Segmentation fault ocurre cuando un proceso esta intentando acceder a un segmento de memoria que no le corresponde ya que no fue reservado para el, suele ser muy común cuando trabajamos con buffers ya que muchas veces podemos pasar los límites de estos hasta llegar a pisar la posición de memoria que contiene la dirección de retorno de la rutina que se esta ejecutando causando que al retornar el programa vuelva a una dirección de memoria que muy probablemente sea basura o simplemente este ocupada por otro programa que se este ejecutando.  
-- **Buffer overflow**: Ocurre cuando nos pasamos de los límites de un buffer con el que estemos trabajando, este problema no necesariamente causara la interrumpción abrupta del programa que se esta ejecutando(creería depende tambien depende de si se desactiva la protección que el compilador le da al stack al compilar un programa). Los datos del programa se pueden corromper sin que este se entere.  
+- **Segmentation fault**: La memoria suele dividirse en segmentos y páginas, cada proceso que ejecuta el procesador tiene reservada uno o varios de estos segmentos o páginas. Segmentation fault ocurre cuando un proceso esta intentando acceder a un segmento de memoria que no le corresponde ya que no fue reservado para el, suele ser muy común cuando trabajamos con buffers ya que muchas veces podemos pasar los límites de estos hasta llegar a pisar la posición de memoria que contiene la dirección de retorno de la rutina que se esta ejecutando causando que al retornar el programa vuelva a una dirección de memoria que muy probablemente sea basura o simplemente sea parte de otro programa que se este ejecutando.  
+- **Buffer overflow**: Ocurre cuando nos pasamos de los límites de un buffer con el que estemos trabajando, este problema no necesariamente causara la interrumpción abrupta del programa que se esta ejecutando(por ejemplo si se desactiva la protección del compilador al stack con **-fno-stack-protector**) y los datos del programa se pueden corromper sin que este se entere.  
 
 #### Paso 5: SERCOM - Código de retorno y salida estándar ####  
 Se entregaron los módulos correspondientes a la quinta entrega en el SERCOM, no se encontraron errores de compilación, linkeo o de estilo pero aún no pasan todas las pruebas requeridas. 
@@ -468,13 +468,13 @@ Se entregaron los módulos correspondientes a la quinta entrega en el SERCOM, no
 
 ![Ejecucion del comando diff](./screenshots/diff_command4.png)  
 
-Con respecto al paso anterior se actualizaron los headers, se elimino la función **memcpy** para utilizar el input del programa directamente en la apertura del archivo, se agregó la función **fclose** que no se encontraba en el paso (4) y ahora se utiliza un arreglo de caractéres estático para evitar el uso innecesario de memoria.   
+Con respecto al paso anterior se actualizaron los headers, se eliminó la función **memcpy** para utilizar el input del programa directamente en la apertura del archivo, se agregó la función **fclose** que no se encontraba en el paso (4) y ahora se utiliza un arreglo de caracteres estático para evitar el uso innecesario de memoria dinámica.   
 
 b. **Motivo de falla de las pruebas 'Invalid File' y 'Single Word'.**  
 Las pruebas fallan por que no devuelven lo esperado. Y para demostrarlo, el SERCOM utiliza los resultados devueltos por el comando diff para comparar el archivo de salida del programa con el archivo esperado.  
 
 **Falla de prueba 'Invalid File'**  
-> Esta es una prueba que tiene como objetivo validar el código de retorno de un archivo inválido, en el nombre se describe que es una prueba para comprobar un input incorrecto se debería devolver un codigo de error, si se observa el comando diff el código de retorno que devolvió el programa fue 255 (estaba pensado ser -1, pero si se invirtió la salida hasta 255 es porque trabaja con caracteres sin signo).  
+> Esta es una prueba que tiene como objetivo validar el código de retorno de un archivo inválido, en el nombre se describe que es una prueba para comprobar un input incorrecto y se debería devolver un codigo de error, si se observa el comando diff el código de retorno que devolvió el programa fue 255 (estaba pensado ser -1, pero si se invirtió la salida hasta 255 es porque trabaja con caracteres sin signo).  
 ```
 [=>] Comparando archivo_invalido/__return_code__...
 1c1
@@ -483,9 +483,8 @@ Las pruebas fallan por que no devuelven lo esperado. Y para demostrarlo, el SERC
 > 1
 ```
 
-
 **Falla de prueba 'Single Word'**  
-> Esta es una prueba que tiene como objetivo validar la ejecución exitosa del programa, en el nombre se describe que la prueba consiste en una unica palabra, y si se observa el comando diff esta retornando que la cantidad de palabras es 0 y la esperada 1.  
+> Esta es una prueba que tiene como objetivo validar la ejecución exitosa del programa, en el nombre se describe que la prueba consiste en una única palabra, y si se observa el comando diff esta retornando que la cantidad de palabras es 0 y la esperada 1.  
 ```
 [=>] Comparando una_palabra/__stdout__...
 1c1
@@ -496,7 +495,7 @@ Las pruebas fallan por que no devuelven lo esperado. Y para demostrarlo, el SERC
 
 c. **Ejecución del comando hexdump**  
 ![Ejecucion del comando hexdump](./screenshots/hexdump_command.png)  
-> Se puede observar por el comando hexdump que el archivo consta de 4 caractéres y el último es el **64** que corresponde a la **'d'** según la tabla ASCII.  
+> Se puede observar por el comando hexdump que el archivo consta de 4 caracteres y el último es el **64(base 16) = 100(base 10)** que corresponde a la **'d'** según la tabla ASCII.  
 
 d. **Captura de pantalla con el resultado de la ejecución con gdb. Explique brevemente los comandos utilizados en gdb. ¿Por qué motivo el debugger no se detuvo en el breakpoint de la línea 45: self->words++;?**  
 
@@ -586,10 +585,10 @@ Starting program: /home/daniel/Documents/taller_programacion_I/tp0/pasos/tp inpu
 5. **run** input_single_word.txt: comienza la ejecución del programa y le asigna el archivo de entrada **input_signgle_word.txt** o cualquier otro que se indique.
 6. **quit**: Cierra el debugger.
 
-> El debugger no se detuvo porque la función esta dentro de un estructura condicional, la única forma que se detenga es que el programa no salte ese bloque de código. Nótese que ahi esta el bug por el cual no cuenta 1 palabra en el archivo sino 0, nunca entra en la porción de código que controla el contador (en donde esta el breakpoint), para que esto suceda necesita encontrar un caracter delimitador en el texto y ya se observó en el punto **c** que el archivo cuenta con 4 caractéres de los cuales ninguno es delimitador, encuentra primero el EOF antes que alguno de estos y no alcanza a contar la palabra.
+> El debugger no se detuvo porque la función esta dentro de un estructura condicional, la única forma que se detenga es que el programa no salte ese bloque de código. Nótese que ahí esta el bug por el cual no cuenta 1 palabra en el archivo sino 0, nunca entra en la porción de código que controla el contador (en donde esta el breakpoint), para que esto suceda necesita encontrar un caracter delimitador en el texto y ya se observó en el punto **c** que el archivo cuenta con 4 caracteres de los cuales ninguno es delimitador, encuentra primero el EOF antes que alguno de estos y no alcanza a contar la palabra.
 
 #### Paso 6: SERCOM - Entrega exitosa ####  
-Se entregaron los módulos correspondientes a la sexta entrega en el SERCOM, no se encontraron errores de compilación, linkeo o de estilo pero aún no pasan todas las pruebas requeridas. 
+Se entregaron los módulos correspondientes a la sexta entrega en el SERCOM y esta finalmente fue exitosa. 
 
 **a. Descripción de los cambios realizados con respecto a la versión del paso 5.**  
   
@@ -597,7 +596,7 @@ Se entregaron los módulos correspondientes a la sexta entrega en el SERCOM, no 
 
 ![Ejecucion del comando diff5](./screenshots/diff_command5.png)  
 
-Con respecto al paso anterior se actualizaron los headers, se definio una constante (símbolo del procesador), y se modifico la función de cambio de estado para corregir el bug con al contar la ultima palabra de un archivo que no contenga un delimitador antes del EOF.
+Con respecto al paso anterior se actualizaron los headers, se definió una constante (símbolo del procesador), y se modificó la función de cambio de estado para corregir el bug al contar la última palabra de un archivo que no contenga un delimitador antes del EOF.
 
 **b. Entregas realizadas.**  
 
@@ -611,18 +610,9 @@ Con respecto al paso anterior se actualizaron los headers, se definio una consta
 ---
 
 ### Conclusiones ###  
-Para cerrar, se debe decir que los temas tratados en este trabajo son de suma importancia para programar de manera correcta, se deben tener conocimientos sobre el compilador y linker, hay que conocer como funcionan y cuales son sus etapas además de aprender a interpretar los mensajes de errores, para así reconocer rapidamente en que partes del código estan los errores y sobretodo para poder atrapar la mayor cantidad de ellos antes de que lleguen a ejecución. Herramientas como valgrind y gdb ayudaran a reconocer problemas una vez tengamos un programa ejecutable, si bien gdb no es la herramienta más atractiva y fácil de usar, es muy poderosa porque te permite explorar la memoria e incluso modificar el programa mientras se ejecuta, entre muchas otras cosa, con el objetivo de debuggear a fondo.
+Para cerrar, se debe decir que los temas tratados en este trabajo son de suma importancia para programar de manera correcta, se deben tener conocimientos sobre el compilador y linker, hay que conocer como funcionan y cuales son las etapas con las que trabajan, además de aprender a interpretar los mensajes de errores para así reconocer rapidamente en que partes del código estan los errores y sobretodo para poder atrapar la mayor cantidad de ellos antes de que lleguen a ejecución. Herramientas como valgrind y gdb ayudarán a reconocer problemas una vez tengamos un programa ejecutable, si bien gdb no es la herramienta más atractiva y fácil de usar, es muy poderosa porque te permite explorar la memoria e incluso modificar el programa mientras se ejecuta, entre muchas otras cosa con el objetivo de debuggear a fondo.
 
 ---
 ### Aclaraciones ###  
 - No se encontró la carátula de la cátedra y por eso no fue incluida en la presentación del trabajo.
-- El paso 7, no se incorporó en el informe por ser unicamente pruebas locales.  
-
- 
-
-
-
-
-
-
-
+- El paso 7, no se incorporó en el informe por ser únicamente de pruebas locales.  
