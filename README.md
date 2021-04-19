@@ -8,25 +8,25 @@
 El presente trabajo es una introducción a los temas y herramientas básicas presentes en la materia **Taller de Programacion I de la FIUBA** utilizando el lenguaje de programación C, se dividió en 6 pasos/etapas que tienen como objetivo la preparación de un entorno de trabajo, nivelar el conocimiento del lenguaje y familiarizarse con el sistema de entregas de la cátedra SERCOM. A continuación se describirán brevemente cada una de ellas:  
 
 - **Paso 0: Entorno de trabajo**.  
-> Se abordan preguntas téoricas relacionadas a **valgrind** y a como se almacenan en el **stack** las estructuras y variables locales, tambien se incluye una breve explicación de lo que son los archivos estándar y como podemos redirigir estas entradas por la interfaz de línea de comandos.  
+Se abordan preguntas téoricas relacionadas a valgrind y a como se almacenan en el stack las estructuras y variables locales, tambien se incluye una breve explicación de lo que son los archivos estándar y como podemos redirigir estas entradas por la interfaz de línea de comandos.  
 
 - **Paso 1: SERCOM - Errores de generación y normas de programación**.  
-> Etapa en la cual se encuentran muchos errores en tiempo de compilación y se enseña a leer estos mensajes que informa el compilador, además se verifica estilo de programación, ya que se trata de programar de una forma estandar siguiendo lo que google considera las mejores prácticas de programación y se utiliza para el chequeo estático del código la herramienta cpplint.  
+Etapa en la cual se encuentran muchos errores en tiempo de compilación y se enseña a leer estos mensajes que informa el compilador, además se verifica estilo de programación, ya que se trata de programar de una forma estandar siguiendo lo que google considera las mejores prácticas de programación y se utiliza para el chequeo estático del código la herramienta cpplint.  
 
 - **Paso 2: SERCOM - Errores de generación 2**.  
-> Sigue los lineamientos del paso 1, con el objetivo de seguir profundizando en los errores del compilador y del SERCOM.  
+Sigue los lineamientos del paso 1, con el objetivo de seguir profundizando en los errores del compilador y del SERCOM.  
 
 - **Paso 3: SERCOM - Errores de generación 3**.  
- > Etapa final sobre los errores que impiden la generación de un ejecutable. A diferencia de sus predecesoras en esta el enfoque esta puesto sobre el linker y en como reconocer cuando es este el que nos informa un error.  
+Etapa final sobre los errores que impiden la generación de un ejecutable. A diferencia de sus predecesoras en esta el enfoque esta puesto sobre el linker y en como reconocer cuando es este el que nos informa un error.  
  
 - **Paso 4: SERCOM - Memory Leaks y Buffer Overflows**.  
-> Acá se encontrarán los módulos libres de errores que impidan el correcto funcionamiento del compilador. Sin embargo se tratan problemas en tiempo de ejecución asociados a pérdidas de memoria y mal uso de buffers, por lo que se utiliza valgrind como herramienta de debugger que ayuda a encontrar estos problemas de memoria.
+Acá se encontrarán los módulos libres de errores que impidan el correcto funcionamiento del compilador. Sin embargo se tratan problemas en tiempo de ejecución asociados a pérdidas de memoria y mal uso de buffers, por lo que se utiliza valgrind como herramienta de debugger que ayuda a encontrar estos problemas de memoria.
 
 - **Paso 5: SERCOM - Código de retorno y salida estándar**.  
-> Etapa diseñada para analizar el correcto funcionamiento de un programa, sin ningún tipo de errores que interrumpan su ejecución de forma abrupta pero, aún sin que este libre de bugs que impida obtener los resultados esperados. Por lo que el comando diff de linea de comando se vuelve indispensable para entender cuales pruebas estan fallando y por que, para así utilizar una herramienta de debugging como gdb y arreglar el código.
+Etapa diseñada para analizar el correcto funcionamiento de un programa, sin ningún tipo de errores que interrumpan su ejecución de forma abrupta pero, aún sin que este libre de bugs que impida obtener los resultados esperados. Por lo que el comando diff de linea de comando se vuelve indispensable para entender cuales pruebas estan fallando y por que, para así utilizar una herramienta de debugging como gdb y arreglar el código.
 
 - **Paso 6: SERCOM - Entrega exitosa**.  
-> Final de la introducción en donde se muestra una entrega exitosa en el SERCOM.
+Final de la introducción en donde se muestra una entrega exitosa en el SERCOM.
 
 ---
 ### DESARROLLO ###   
