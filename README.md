@@ -613,14 +613,12 @@ Con respecto al paso anterior se actualizaron los headers, se definio una consta
 ---
 
 ### Conclusiones ###  
-  
-
-
+Para cerrar, se debe decir que los temas tratados en este trabajo son de suma importancia para programar de manera correcta, se deben tener conocimientos sobre el compilador y linker, hay que conocer como funcionan y cuales son sus etapas además de aprender a interpretar los mensajes de errores, para así reconocer rapidamente en que partes del código estan los errores y sobretodo para poder atrapar la mayor cantidad de ellos antes de que lleguen a ejecución. Herramientas como valgrind y gdb ayudaran a reconocer problemas una vez tengamos un programa ejecutable, si bien gdb no es la herramienta más atractiva y fácil de usar, es muy poderosa porque te permite explorar la memoria e incluso modificar el programa mientras se ejecuta, entre muchas otras cosa, con el objetivo de debuggear a fondo.
 
 ---
 ### Aclaraciones ###  
 - No se encontró la carátula de la cátedra y por eso no fue incluida en la presentación del trabajo.
-- El paso 7, no se incorporo en el informe por ser unicamente pruebas locales.  
+- El paso 7, no se incorporó en el informe por ser unicamente pruebas locales.  
 
  
 
