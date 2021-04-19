@@ -11,7 +11,7 @@
 - [x] Paso 2
 - [x] Paso 3
 - [x] Paso 4
-- [ ] Paso 5
+- [x] Paso 5
 - [ ] Paso 6
 
 ---
@@ -352,7 +352,7 @@ sys     0m0.055s
 ==00:00:00:01.231 60== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 ```
   
-Valgrind detectó 218 alocaciones de memoria dinámica de las cuales libero 2 y se perdieron 216 de esas peticiones, de las cuales 215 fueron perdidas definitivas y 1 es aun alcanzable, a continuación se detallan estos errores:    
+Valgrind detectó 218 alocaciones de memoria dinámica de las cuales libero 2 y se perdieron 216 de esas peticiones, de las cuales 215 fueron perdidas definitivas y 1 es aun adirecciónlcanzable, a continuación se detallan estos errores:    
 
 **Bloques de memoria aún alcanzables**
 ```
@@ -430,7 +430,7 @@ sys     0m0.053s
 ==00:00:00:01.181 48== For lists of detected and suppressed errors, rerun with: -s
 ==00:00:00:01.181 48== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
-Valgrind detectó un unico error de memoria, en este caso no es por pérdidas sino por un buffer overflow, la ultima función que se ejecutó antes del problema fue memcpy la cual copia una cantidad de datos exacta desde un buffer fuente a un destino pero, si el tamaño del buffer destino es menor al del buffer fuente memcpy no lo controla, el comportamiento es indefinido. En este caso se esta intentando copiar algo muy grande en un buffer muy pequeño y se produce un overflow, sin embargo este problema no lo detecta unicamente valgrind y tambien falla la ejecución sin valgrind, de hecho el el registro se observa como se informa el error **memcpy_chk: buffer overflow detected** antes de comenzar siquiera a correr valgrind y por alguna raznó continua la ejecución y valgrind lo detecta tambien.  
+Valgrind detectó un unico error de memoria, en este caso no es por pérdidas sino por un buffer overflow, la ultima función que se ejecutó antes del problema fue memcpy la cual copia una cantidad de datos exacta desde un buffer fuente a un destino pero, si el tamaño del buffer destino es menor al del buffer fuente memcpy no lo controla, el comportamiento es indefinido. En este caso se esta intentando copiar algo muy grande en un buffer muy pequeño y se produce un overflow, sin embargo este problema no lo detecta unicamente valgrind y tambien falla la ejecución sin valgrind, de hecho en el registro se observa como se informa el error **memcpy_chk: buffer overflow detected** antes de comenzar siquiera a correr valgrind y por alguna razón continua la ejecución de valgrind y lo detecta tambien.  
   
 **Error memcpy**  
 ```
@@ -442,11 +442,145 @@ Valgrind detectó un unico error de memoria, en este caso no es por pérdidas si
 ```
 
 d. **¿Podría solucionarse este error utilizando la función strncpy? ¿Qué hubiera ocurrido con la ejecución de la prueba?**  
-No, sería lo mismo pues el problema no es la función memcpy sino la cantidad de datos que queremos copiar del buffer mas grande al mas pequeño, si limitamos este valor al tamaño del buffer mas chico entonces el problema del overflow desaparecería porque se truncarían los datos que copia del buffer fuente, claro esta que el comportamiento de la función sería incorrecto pues del nombre del archivo depende la apertura de un recurso. La diferencia entre memcpy y strncpy es que strncpy completará con ceros el buffer destino en caso de que el buffer destino sea mas pequeño y memcpy no lo hará, se limitará a copiar exactamente lo que le pidamos, para este problema que enfrentamos no habría diferencia alguna pues precisamente el buffer destino es mas grande.  
+No, sería lo mismo pues el problema no es la función memcpy sino la cantidad de datos que queremos copiar del buffer mas grande al mas pequeño, si limitamos este valor al tamaño del buffer mas chico entonces el problema del overflow desaparecería porque se truncarían los datos que copia del buffer fuente, claro esta que el comportamiento de la función sería incorrecto pues del nombre del archivo depende la apertura de un recurso. La diferencia entre memcpy y strncpy es que strncpy solo trabaja con cadenas de caracteres además de completar con ceros el buffer destino en caso de que sea mas pequeño que el buffer fuente y memcpy no lo hará, se limitará a copiar exactamente lo que le pidamos, para este problema que enfrentamos no habría diferencia alguna pues precisamente el buffer destino es mas grande y trabajamos con cadenas de caractéres.  
 
 e. **Explicar de qué se trata un segmentation fault y un buffer overflow**  
-- **Segmentation fault**: La memoria suele dividirse en segmentos y páginas, cada proceso que ejecuta el procesador tiene reservada uno o varios de estos segmentos o páginas. Segmentation fault ocurre cuando un proceso esta intentando acceder a un segmento de memoria que no le corresponde ya que no fue reservado para el, suele ser muy común cuando trabajamos con buffers ya que muchas veces podemos pasar los límites de estos hasta llegar a pisar la dirección de memoria que contiene la dirección de retorno de la rutina que se esta ejecutando causando que al retornar el programa vuelva a una dirección de memoria que muy probablemente sea basura o simplemente este ocupada por otro programa que se este ejecutando.  
+- **Segmentation fault**: La memoria suele dividirse en segmentos y páginas, cada proceso que ejecuta el procesador tiene reservada uno o varios de estos segmentos o páginas. Segmentation fault ocurre cuando un proceso esta intentando acceder a un segmento de memoria que no le corresponde ya que no fue reservado para el, suele ser muy común cuando trabajamos con buffers ya que muchas veces podemos pasar los límites de estos hasta llegar a pisar la posición de memoria que contiene la dirección de retorno de la rutina que se esta ejecutando causando que al retornar el programa vuelva a una dirección de memoria que muy probablemente sea basura o simplemente este ocupada por otro programa que se este ejecutando.  
 - **Buffer overflow**: Ocurre cuando nos pasamos de los límites de un buffer con el que estemos trabajando, este problema no necesariamente causara la interrumpción abrupta del programa que se esta ejecutando(creería depende tambien depende de si se desactiva la protección que el compilador le da al stack al compilar un programa). Los datos del programa se pueden corromper sin que este se entere.  
+
+### Paso 5: SERCOM - Código de retorno y salida estándar ###  
+Se entregaron los módulos correspondientes a la quinta entrega en el SERCOM, no se encontraron errores de compilación, linkeo o de estilo pero aún no pasan todas las pruebas requeridas. 
+
+**a. Descripción de los cambios realizados con respecto a la versión del paso 4.**  
+  
+**Ejecución del comando diff**   
+
+![Ejecucion del comando diff](./screenshots/diff_command4.png)  
+
+Con respecto al paso anterior se actualizaron los headers, se elimino la función **memcpy** para utilizar el input del programa directamente en la apertura del archivo, se agregó la función **fclose** que no se encontraba en el paso (4) y ahora se utiliza un arreglo de caractéres estático para evitar el uso innecesario de memoria.   
+
+b. **Motivo de falla de las pruebas 'Invalid File' y 'Single Word'.**  
+Las pruebas fallan por que no devuelven lo esperado. Y para demostrarlo, el SERCOM utiliza los resultados devueltos por el comando diff para comparar el archivo de salida del programa con el archivo esperado.  
+
+**Falla de prueba 'Invalid File'**  
+> Esta es una prueba que tiene como objetivo validar el código de retorno de un archivo inválido, en el nombre se describe que es una prueba para comprobar un input incorrecto se debería devolver un codigo de error, si se observa el comando diff el código de retorno que devolvió el programa fue 255 (estaba pensado ser -1, pero si se invirtió la salida hasta 255 es porque trabaja con caracteres sin signo).  
+```
+[=>] Comparando archivo_invalido/__return_code__...
+1c1
+< 255
+---
+> 1
+```
+
+
+**Falla de prueba 'Single Word'**  
+> Esta es una prueba que tiene como objetivo validar la ejecución exitosa del programa, en el nombre se describe que la prueba consiste en una unica palabra, y si se observa el comando diff esta retornando que la cantidad de palabras es 0 y la esperada 1.  
+```
+[=>] Comparando una_palabra/__stdout__...
+1c1
+< 0
+---
+> 1
+```
+
+c. **Ejecución del comando hexdump**  
+![Ejecucion del comando hexdump](./screenshots/hexdump_command.png)  
+> Se puede observar por el comando hexdump que el archivo consta de 4 caractéres y el último es el **64** que corresponde a la **'d'** según la tabla ASCII.  
+
+d. **Captura de pantalla con el resultado de la ejecución con gdb. Explique brevemente los comandos utilizados en gdb. ¿Por qué motivo el debugger no se detuvo en el breakpoint de la línea 45: self->words++;?**  
+
+```
+daniel@daniel-VirtualBox:pasos$ gdb ./tp
+GNU gdb (Ubun`tu 9.2-0ubuntu1~20.04) 9.2
+Copyright (C) 2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from ./tp...
+(gdb) info functions
+All defined functions:
+
+File paso5_main.c:
+9:	int main(int, char **);
+
+File paso5_wordscounter.c:
+14:	void wordscounter_create(wordscounter_t *);
+18:	void wordscounter_destroy(wordscounter_t *);
+22:	size_t wordscounter_get_words(wordscounter_t *);
+26:	void wordscounter_process(wordscounter_t *, FILE *);
+34:	static char wordscounter_next_state(wordscounter_t *, char, char);
+
+Non-debugging symbols:
+0x0000000000001000  _init
+0x0000000000001090  __cxa_finalize@plt
+0x00000000000010a0  fclose@plt
+0x00000000000010b0  __stack_chk_fail@plt
+0x00000000000010c0  strchr@plt
+0x00000000000010d0  __printf_chk@plt
+0x00000000000010e0  fopen@plt
+0x00000000000010f0  getc@plt
+0x00000000000011b0  _start
+0x00000000000011e0  deregister_tm_clones
+0x0000000000001210  register_tm_clones
+0x0000000000001250  __do_global_dtors_aux
+0x0000000000001290  frame_dummy
+0x0000000000001380  __libc_csu_init
+0x00000000000013f0  __libc_csu_fini
+0x00000000000013f8  _fini
+(gdb) list wordscounter_next_state 
+33	
+34	static char wordscounter_next_state(wordscounter_t *self, char state, char c) {
+35	    const char* delim_words = " ,.;:\n";
+36	
+37	    char next_state = state;
+38	    if (c == EOF) {
+39	        next_state = STATE_FINISHED;
+40	    } else if (state == STATE_WAITING_WORD) {
+41	        if (strchr(delim_words, c) == NULL)
+42	            next_state = STATE_IN_WORD;
+(gdb) list
+43	    } else if (state == STATE_IN_WORD) {
+44	        if (strchr(delim_words, c) != NULL) {
+45	            self->words++;
+46	            next_state = STATE_WAITING_WORD;
+47	        }
+48	    }
+49	    return next_state;
+50	}
+51	
+(gdb) break 45
+Breakpoint 1 at 0x1300: file paso5_wordscounter.c, line 45.
+(gdb)  run input_single_word.txt 
+Starting program: /home/daniel/Documents/taller_programacion_I/tp0/pasos/tp input_single_word.txt
+0
+[Inferior 1 (process 12051) exited normally]
+(gdb) quit
+```
+**Commandos utilizados del debugger**  
+
+1. **info** functions: Devuelve la información de todas las funciones que se ejecutan en el programa.
+2. **list** wordcounter_next_state: Se dirige a la función de nombre **wordcounter_next_state** (pero podría ser cualquier otra) y muestra una cierta cantidad de líneas de código que la suceden.
+3. **list**: Muestra una cierta cantidad de líneas de código desde el punto en donde se encuentra observando el debugger.
+4. **break** 45: Asigna un breakpoint que detendrá la ejecución del programa en la línea 45.
+5. **run** input_single_word.txt: comienza la ejecución del programa y le asigna el archivo de entrada **input_signgle_word.txt** o cualquier otro que se indique.
+6. **quit**: Cierra el debugger.
+
+> El debugger no se detuvo porque la función esta dentro de un estructura condicional, la única forma que se detenga es que el programa no salte ese bloque de código. Nótese que ahi esta el bug por el cual no cuenta 1 palabra en el archivo sino 0, nunca entra en la porción de código que controla el contador (en donde esta el breakpoint), para que esto suceda necesita encontrar un caracter delimitador en el texto y ya se observó en el punto **c** que el archivo cuenta con 4 caractéres de los cuales ninguno es delimitador, encuentra primero el EOF antes que alguno de estos y no alcanza a contar la palabra.
+
+
+
+
+ 
 
 
 
