@@ -249,7 +249,7 @@ A continuación se detallan los errores, estos fueron enumerados para mayor clar
 10. **include '<stdlib.h>' or provide a declaration of 'malloc'**: El compilador esta nuevamente sugiriendo que incluyamos la libreria que contiene la declaración de **malloc**.  
 
 #### Paso 3: SERCOM - Errores de generación 3 ####  
-Se entregaron los módulos correspondientes a la tercera entrega en el SERCOM, y decrementaron los errores del compilador.  
+Se entregaron los módulos correspondientes a la tercera entrega en el SERCOM, y decrementaron los errores.  
 
 **Documentación de errores**  
 
@@ -275,7 +275,7 @@ make: *** [/task/student/MakefileTP0:135: tp] Error 1
 Solo se reportó un error al momento de generar el ejecutable:  
 > **undefined reference to `wordscounter_destroy'**: Indica que no se definió una referencia a la función wordscounter_destroy, este es un error en tiempo de linkeo. Esto se puede reconocer por las siguientes formas:  
 
-1. El nombre del problema es una pista para entender que el linker lo generó,ya que indica que no encuentra cual es la dirección de memoria a la cual asignarle los llamados del main.c a esta.  
+1. El nombre del problema es una pista para entender que el linker lo generó,ya que indica que no encuentra cual es la dirección de memoria a la cual asignarle los llamados que se realizan desde el main.c.  
 2. Revisando el proceso de compilación que se llevo acabo, se observa que las primeras 4 líneas corresponden a llamados al compilador para llevar los archivos **paso3_wordscounter.c** y **paso3_main.c** a código objeto por separado (flag **-c**), pero la línea 5 es una instrucción diferente, se le esta pidiendo al compilador que cree un ejecutable linkeando los códigos objetos que recién generó, es por eso el llamado al linker (**/usr/bin/ld**) genera un error en la función que se definió como ***"main"*** internamente en el código assembly.  
 3. El error reportado, según el informe, es generado por el linker (**error: ld returned 1 exit status**), el código de que devuelve al momento de salir del proceso es 1 de error.  
 
