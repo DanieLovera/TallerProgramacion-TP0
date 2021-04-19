@@ -4,7 +4,7 @@
 **[https://github.com/DanieLovera/tp0](https://github.com/DanieLovera/tp0)**  
 
 ---
-### INTRODUCCION ###  
+### Introducción ###  
 El presente trabajo es una introducción a los temas y herramientas básicas presentes en la materia **Taller de Programacion I de la FIUBA** utilizando el lenguaje de programación C, se dividió en 6 pasos/etapas que tienen como objetivo la preparación de un entorno de trabajo, nivelar el conocimiento del lenguaje y familiarizarse con el sistema de entregas de la cátedra SERCOM. A continuación se describirán brevemente cada una de ellas:  
 
 - **Paso 0: Entorno de trabajo**.  
@@ -29,7 +29,7 @@ Etapa diseñada para analizar el correcto funcionamiento de un programa, sin nin
 Final de la introducción en donde se muestra una entrega exitosa en el SERCOM.
 
 ---
-### DESARROLLO ###   
+### Desarrollo ###   
 En esta sección se detallan los pasos seguidos durante el desarrollo del trabajo.
 
 #### Paso 0: Entorno de Trabajo #### 
