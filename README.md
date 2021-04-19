@@ -5,7 +5,7 @@
 
 ---
 ### Introducción ###  
-El presente trabajo es una introducción a los temas y herramientas básicas estudiadas en la materia **Taller de Programación I de la FIUBA** utilizando el lenguaje de programación C, se dividió en 6 pasos/etapas que tienen como objetivo la preparación de un entorno de trabajo, nivelar el conocimiento del lenguaje y familiarizarse con el sistema de entregas de la cátedra SERCOM. A continuación se describirán brevemente cada una de ellas:  
+El presente trabajo es una introducción a los temas y herramientas básicas estudiadas en la materia **Taller de Programación I** de la **FIUBA** utilizando el lenguaje de programación C, se dividió en 6 pasos/etapas que tienen como objetivo la preparación de un entorno de trabajo, nivelar el conocimiento del lenguaje y familiarizarse con el sistema de entregas de la cátedra SERCOM. A continuación se describirán brevemente cada una de ellas:  
 
 - **Paso 0: Entorno de trabajo**.  
 Se abordan preguntas teóricas relacionadas a valgrind y a como se almacenan en el área de stack las estructuras y variables locales, también se incluye una breve explicación sobre los archivos estándar (STDIN, STDOUT, STDERR) y como podemos redirigir estas entradas por la interfaz de línea de comandos.  
