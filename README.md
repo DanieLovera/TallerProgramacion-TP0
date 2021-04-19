@@ -86,8 +86,8 @@ La explicación a esto es que un entero no podría ser colocado en la posición 
 Este caso es similar al anterior, pero los char a y b se pueden colocar uno al lado de otro y esto desperdiciaría menos memoria que el caso anterior.
 
 **d. Investigar la existencia de los archivos estandar: STDIN, STDOUT, STDERR. Explicar brevemente su uso y como redirigirlos en caso de ser necesario (caracteres > y <) y como conectar la salida estándar de un proceso a la entrada estándar de otro con un pipe (caracter |)**  
-> Todos los programas que se ejecuten en UNIX's comienzan con 3 canales abiertos para transferencias de datos, es decir uno para la entrada, otro de salida y el último es de salida también pero en caso de errores en la ejecución del programa, y al término de su ejecución estos canales se cierran automáticamente. Los archivos estandar STDIN, STDOUT, STDERR son descriptores de archivos (son valores de tipo int en C/C++ que sirven como clave para que internamente se reconozca a que tendrá acceso el proceso que se esta ejecutando), estos son estándar porque los valores que se le asignan a cada uno son: STDIN = 0, STDOUT = 1, STDOUT = 2.
-Por defecto la entrada estándar representa a los flujos de datos proveniente del teclado y la salida estandár común/errores representa al flujo de datos que se dirige a la pantalla y se utilizan para ingresar datos que pueda requerir un programa o para extraerlos de el.  
+> Todos los programas que se ejecuten en UNIX's comienzan con 3 canales abiertos para transferencias de datos, es decir uno para la entrada, otro de salida y el último es de salida también pero en caso de errores en la ejecución del programa, y al término de su ejecución estos canales se cierran automáticamente. Los archivos estandar STDIN, STDOUT, STDERR son descriptores de archivos (son valores de tipo int en C/C++ que sirven como clave para que internamente se reconozca a que tendrá acceso cada proceso), estos son estándar porque los valores que se le asignan a cada uno son: STDIN = 0, STDOUT = 1, STDOUT = 2.
+Por defecto la entrada estándar representa a los flujos de datos proveniente del teclado y la salida estándar común/errores representa al flujo de datos que se dirige hacia la pantalla.  
 
 Ejemplos de como redirigir los archivos estandar por CLI:
 
@@ -120,18 +120,18 @@ Descripción de errores generados por el SERCOM.
     Done processing /task/student//source_unsafe/paso1_wordscounter.h
     Total errors found: 11
 ```  
-Los **problemas encontrados** son bastante descriptivos ya que informan la ruta del archivo que contiene el problema, la línea de código de donde se encuentra y ademas el detalle del mismo. **Ejemplo** de como se lee una línea de error:  
+Los **problemas encontrados** son bastante descriptivos ya que informan la ruta del archivo que contiene el problema, la línea de código de donde se encuentra y además el detalle del mismo. **Ejemplo** de como se lee una línea de error:  
 >  ruta_archivo/nombre_archivo.[extensión_archivo]:[línea_código]: [Descripción]  
 
 A continuación se detallan los errores de la forma [**Descripción**/**Código que lo genera**], estos fueron enumerados para mayor claridad:  
-1. **Missing space before ( in while( / while(state != STATE_FINISHED)**: Indica la **falta de un espacio** antes del párentesis en el while, por lo cual el código que lo soluciona sería while (state != STATE_FINISHED).  
+1. **Missing space before ( in while( / while(state != STATE_FINISHED)**: Indica la **falta de un espacio** antes del paréntesis en el while, por lo cual el código que lo soluciona sería while (state != STATE_FINISHED).  
 2. **Mismatching spaces inside () in if / if (  c == EOF) {**: Indica la falta de **paridad** entre los espacios adentro del paréntesis del  if, por lo cual una de las formas de solucionarlo sería if (  c == EOF  ), de forma tal que sean simétricos los espacios en blanco.  
 3. **Should have zero or one spaces inside ( and ) in if / (  c == EOF)**: Indica que debe haber **ningún** o a lo sumo **un** espacio dentro del paréntesis del if, por lo cual una forma de solucionarlo sería if (c == EOF).  
 4. **An else should appear on the same line as the preceding } / }\n else if (state == STATE_IN_WORD) {**: Indica que **un else debe aparecer** en la misma línea que la llave que lo precede, por lo cual la forma de solucionarlo es } else if (state == STATE_IN_WORD) {, es decir deben estar alineados la llave y el else.  
 5. **If an else has a brace on one side, it should have it on both / }\n else if (state == STATE_IN_WORD) {**: Indica que **si un else** tiene una llave de un lado, **entonces** debe tenerlo tambien en el lado opuesto, por lo cual la forma de solucionarlo es igual al anterior (4), ya que en este caso la llave que no empareja es la que precede al else. *Observación: localmente cpplint junto con el script provisto por la cátedra no reconoce este como un error.*  
 6. **Missing space before ( in if( / if(strchr(delim_words, c) != NULL)**: Este error es idéntico al (1), con la salvedad de que es un if y no un while, por lo cual la solución es la misma.  
 7. **Extra space before last semicolon. If this should be an empty statement, use {}  instead. / return next_state ;**: Indica que hay un espacio extra antes del último punto y coma, por lo cual el código que lo soluciona sería return next_state;  
-8. **Almost always, snprintf is better than strcpy  [runtime/printf] / strcpy(filepath, argv[1])**: Indica que la función snprintf es mejor que strcpy, esto es porque strcpy es una función insegura ya que no tiene control de cuantos datos escribe en un buffer. La solución es usar la funcion que recomienda o usar strncpy que soluciona el problema del tamaño del buffer tambien.  
+8. **Almost always, snprintf is better than strcpy  [runtime/printf] / strcpy(filepath, argv[1])**: Indica que la función snprintf es mejor que strcpy, esto es porque strcpy es una función insegura ya que no tiene control de cuantos datos escribe en un buffer(copia todos los datos del fuente). La solución es usar la función que recomienda o usar strncpy que también soluciona el problema del tamaño del buffer.  
 9. **An else should appear on the same line as the preceding } / }\n else {**: Mismo error que el (4).  
 10. **If an else has a brace on one side, it should have it on both / }\n else {**: Mismo error que en el (5).  
 11. **Lines should be <= 80 characters long / //Tipo wordscounter_t: almacena la cantidad de palabras procesadas de un archivo**: Indica que las líneas de código tienen que contener menos de 81 caracteres. La solución es separar el comentario en dos líneas.  
@@ -158,7 +158,7 @@ paso1_main.c: In function 'main':
       |         ^~~~~~~~~~~~~~~~~~~~
 make: *** [/task/student/MakefileTP0:144: paso1_main.o] Error 1
 ```  
-En este caso es el compilador o linker los que informan sobrelos errores de una forma similar al cpplint, estos errores muchas veces son autodescriptivos, e indican el archivo que contiene el problema, la línea en que ocurre, en que caracter de la línea ocurre, y si el problema es un error o un warning junto con la descripción del mismo. **Ejemplo** de como se lee una línea de error:  
+En este caso es el compilador el que informa sobre los errores de una forma similar al cpplint, estos errores muchas veces son autodescriptivos e indican el archivo que contiene el problema, la línea en que ocurre, en que caracter de la línea ocurre, y si el problema es un error o un warning junto con la descripción del mismo. **Ejemplo** de como se lee una línea de error:  
 >  nombre_archivo.[extensión_archivo]:[línea_código]:[número_caracter]:[warning/error]:[Descripción]  
 
 A continuación se detallan los errores, estos fueron enumerados para mayor claridad y no forman parte de la salida orginal.  
