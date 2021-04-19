@@ -5,25 +5,25 @@
 
 ---
 ### Introducción ###  
-El presente trabajo es una introducción a los temas y herramientas básicas presentes en la materia **Taller de Programacion I de la FIUBA** utilizando el lenguaje de programación C, se dividió en 6 pasos/etapas que tienen como objetivo la preparación de un entorno de trabajo, nivelar el conocimiento del lenguaje y familiarizarse con el sistema de entregas de la cátedra SERCOM. A continuación se describirán brevemente cada una de ellas:  
+El presente trabajo es una introducción a los temas y herramientas básicas estudiadas en la materia **Taller de Programación I de la FIUBA** utilizando el lenguaje de programación C, se dividió en 6 pasos/etapas que tienen como objetivo la preparación de un entorno de trabajo, nivelar el conocimiento del lenguaje y familiarizarse con el sistema de entregas de la cátedra SERCOM. A continuación se describirán brevemente cada una de ellas:  
 
 - **Paso 0: Entorno de trabajo**.  
-Se abordan preguntas téoricas relacionadas a valgrind y a como se almacenan en el stack las estructuras y variables locales, tambien se incluye una breve explicación de lo que son los archivos estándar y como podemos redirigir estas entradas por la interfaz de línea de comandos.  
+Se abordan preguntas teóricas relacionadas a valgrind y a como se almacenan en el área de stack las estructuras y variables locales, también se incluye una breve explicación sobre los archivos estándar (STDIN, STDOUT, STDERR) y como podemos redirigir estas entradas por la interfaz de línea de comandos.  
 
 - **Paso 1: SERCOM - Errores de generación y normas de programación**.  
-Etapa en la cual se encuentran muchos errores en tiempo de compilación y se enseña a leer estos mensajes que informa el compilador, además se verifica estilo de programación, ya que se trata de programar de una forma estandar siguiendo lo que google considera las mejores prácticas de programación y se utiliza para el chequeo estático del código la herramienta cpplint.  
+Etapa en la cual se encuentran muchos errores en tiempo de compilación y se muestra como leer estos mensajes que informa el compilador, además se verifica estilo de programación ya que se trata de programar de una forma estándar, siguiendo lo que google considera las mejores prácticas de programación es por eso que se hace uso (para el chequeo estático del código) de la herramienta cpplint.  
 
 - **Paso 2: SERCOM - Errores de generación 2**.  
-Sigue los lineamientos del paso 1, con el objetivo de seguir profundizando en los errores del compilador y del SERCOM.  
+Sigue los lineamientos del paso 1 con el objetivo de seguir profundizando en los errores del compilador y del SERCOM.  
 
 - **Paso 3: SERCOM - Errores de generación 3**.  
-Etapa final sobre los errores que impiden la generación de un ejecutable. A diferencia de sus predecesoras en esta el enfoque esta puesto sobre el linker y en como reconocer cuando es este el que nos informa un error.  
+Etapa final sobre los errores que impiden la generación de un ejecutable. A diferencia de sus predecesoras en esta, el enfoque esta puesto sobre el linker y en como reconocer cuando esté nos informa un error.  
  
 - **Paso 4: SERCOM - Memory Leaks y Buffer Overflows**.  
-Acá se encontrarán los módulos libres de errores que impidan el correcto funcionamiento del compilador. Sin embargo se tratan problemas en tiempo de ejecución asociados a pérdidas de memoria y mal uso de buffers, por lo que se utiliza valgrind como herramienta de debugger que ayuda a encontrar estos problemas de memoria.
+Acá se encontrarán los módulos libres de errores que impidan el correcto funcionamiento del compilador, sin embargo, se encuentran problemas en tiempo de ejecución asociados a pérdidas de memoria y mal uso de buffers, por lo que se utiliza valgrind como herramienta de debugger que ayuda a encontrar estos problemas de memoria.
 
 - **Paso 5: SERCOM - Código de retorno y salida estándar**.  
-Etapa diseñada para analizar el correcto funcionamiento de un programa, sin ningún tipo de errores que interrumpan su ejecución de forma abrupta pero, aún sin que este libre de bugs que impida obtener los resultados esperados. Por lo que el comando diff de linea de comando se vuelve indispensable para entender cuales pruebas estan fallando y por que, para así utilizar una herramienta de debugging como gdb y arreglar el código.
+Etapa diseñada para analizar el correcto funcionamiento de un programa sin ningún tipo de errores que interrumpan su ejecución de forma abrupta, pero aún sin que este libre de bugs que impida obtener los resultados esperados. El comando diff de línea de comandos se vuelve indispensable para entender cuales pruebas están fallando y por que, para así utilizar una herramienta de debugging como gdb y arreglar el código.
 
 - **Paso 6: SERCOM - Entrega exitosa**.  
 Final de la introducción en donde se muestra una entrega exitosa en el SERCOM.
@@ -33,7 +33,7 @@ Final de la introducción en donde se muestra una entrega exitosa en el SERCOM.
 En esta sección se detallan los pasos seguidos durante el desarrollo del trabajo.
 
 #### Paso 0: Entorno de Trabajo #### 
-Se crea un programa simple que muestra el mensaje "Hola Mundo" el cual se ejecuta con y sin valgrind, los resultados obtenidos fueron:
+Se crea un programa simple que muestra el mensaje "Hola Mundo", este se ejecuta con y sin valgrind y los resultados obtenidos son:
 
 1. **Ejecución sin valgrind**  
 ![Ejecucion sin valgrind](./screenshots/no_valgrind_exe.png)  
@@ -48,12 +48,12 @@ Se crea un programa simple que muestra el mensaje "Hola Mundo" el cual se ejecut
 Las herramientas mas comunes son:  
 
 - **Memcheck:** 
-Detecta errores relacionados a la memoria. Posiblemente sea la opción mas común pues es la herramienta que se utiliza por defecto cuando se ejecuta un programa  con valgrind y ademas es muy común en C/C++ que los programadores olviden liberar memoria solicitada dinamicamente (problema grave que imposibilita reutilizar estas porciones de memoria mientras el programa se mantenga en ejecución).  
+Detecta errores relacionados a la memoria. Posiblemente sea la opción mas común pues es la herramienta que se utiliza por defecto cuando se ejecuta un programa  con valgrind y además es muy común en C/C++ que los programadores olviden liberar memoria solicitada dinámicamente (problema grave que imposibilita reutilizar estas porciones de memoria mientras el programa se mantenga en ejecución).  
 
 - **Cachegrind:**
 Herramienta de profiling que ayuda al programador a conocer como se comportan las memorias caches del procesador en la ejecución de un programa.  
 
-Otras herramientas menos comunes o al menos desconocidas para el autor de este texto son:
+Otras herramientas menos comunes o al menos desconocidas para el autor del trabajo son:
 - **Callgrind:**
 Recolecta información sobre los llamados a funciones en un programa.  
  
@@ -64,31 +64,29 @@ Detecta errores en la ejecución de threads de un programa.
 Otra opción para detección de errores en threads.  
 
 - **Massif:**
-Analiza el uso del Heap (area de memoria dinámica).
+Analiza el uso del Heap (área de memoria dinámica).
   
 - **DHAT:**
 Es otra herramienta para analizar el Heap.  
 
 **b. ¿Que representa sizeof()? ¿Cual seria el valor de salida de sizeof(char) y sizeof(int)?**  
-> **sizeof()** es un operador de C/C++ que permite calcular el tamaño en bytes de los tipos de datos definidos por el lenguaje o por el usuario. El valor de **sizeof(char)** sera 1 (1 byte) y el de **sizeof(int)** dependerá de la arquitectura o del compilador, 
-lo mas común es que sea 4 (4 bytes).
+> **sizeof()** es un operador de C/C++ que permite calcular el tamaño en bytes de los tipos de datos definidos por el lenguaje o por el usuario. El valor de **sizeof(char)** sera 1 (1 byte) y el de **sizeof(int)** dependerá de la arquitectura o del compilador, el estándar es que sea 4 (4 bytes).
 
 **c. ¿El sizeof() de una struct de C es igual a la suma del sizeof() de cada uno de sus elementos?. Justifique mediante un ejemplo.**  
-> No necesariamente, en una estructura pueden haber datos de cualquier tipo de primitivo e incluso otra estructura por lo cual el tamaño dependerá de la arquitectura y además de como el compilador decida colocar las variables en memoria, puede tomar la decisión de alinear los datos a posiciones de memoria multiplos de cada tipo de dato y trabajar con *paddings*(desperdicios) lo cual en particular simplificará el código generado por el compilador pues no necesita 
-hacer calculos especiales para leer un dato, o podría no alinearlos y trabajar sin *padding* (si la arquitectura lo permite) para ahorrar espacio en memoria. En conclusión el **sizeof** de una estructura depende de varias variables, no es fijo.  
+> No necesariamente, en una estructura pueden haber datos de cualquier tipo de primitivo e incluso otra estructura por lo cual el tamaño dependerá de la arquitectura y además de como el compilador decida colocar las variables en memoria, puede tomar la decisión de alinear los datos a posiciones de memoria multiplos de cada tipo de dato y trabajar con *paddings*(desperdicios) lo cual en particular simplificará el código generado por el compilador  o podría no alinearlos y trabajar sin *padding* (si la arquitectura lo permite) para ahorrar espacio en memoria. En conclusión el **sizeof** de una estructura depende de varias variables, no es fijo.  
 
 ![Ejecucion sin valgrind](./screenshots/structs_example.png)   
 
 Tomando en cuenta el caso del compilador sin compactar los datos, los resultados serían:  
 
 - **sizeof(struct foo)** = (1 + 3 bytes de padding) + 4 + (1 + 3 bytes de padding) = **12**  
-La explicación a esto es que un entero no podría ser colocado en la posición de memoria siguiente al char porque deben estar alineados a posiciones de memoria multiplos de 4. Considerando que el char estuviera en la posicion 0, el int debe ir en la posición 4 y dejar el padding en las posiciones 1,2 y 3, el último char tambien deja un padding de 3 bytes.
+La explicación a esto es que un entero no podría ser colocado en la posición de memoria siguiente al char porque deben estar alineados a posiciones de memoria multiplos de 4. Considerando que el char estuviera en la posición 0, el int debe ir en la posición 4 y dejar el padding en las posiciones 1,2 y 3, el último char tambien deja un padding de 3 bytes.
 
 - **sizeof(struct bar)** = (1 + 1 + 2 bytes de padding) + 4 = **8**  
-Este caso es similar al anterior, pero los char a y b se pueden colocar uno al lado de otro y esto desperdiciaría menos memoria que caso anterior.
+Este caso es similar al anterior, pero los char a y b se pueden colocar uno al lado de otro y esto desperdiciaría menos memoria que el caso anterior.
 
 **d. Investigar la existencia de los archivos estandar: STDIN, STDOUT, STDERR. Explicar brevemente su uso y como redirigirlos en caso de ser necesario (caracteres > y <) y como conectar la salida estándar de un proceso a la entrada estándar de otro con un pipe (caracter |)**  
-> Todos los programas que se ejecuten en UNIX's comienzan con 3 canales abiertos para transferencias de datos, es decir uno para la entrada, otro de salida y el último es de salida tambien pero en caso de errores en la ejecución del programa, al término del programa estos canales se cierran automáticamente. Los archivos estandar STDIN, STDOUT, STDERR son descriptores de archivos (son valores de tipo int en C/C++ que sirven como clave para que internamente se reconozca a que tendrá acceso el proceso que se esta ejecutando), estos son estándar porque los valores que se le asignan a cada uno son: STDIN = 0, STDOUT = 1, STDOUT = 2.
+> Todos los programas que se ejecuten en UNIX's comienzan con 3 canales abiertos para transferencias de datos, es decir uno para la entrada, otro de salida y el último es de salida también pero en caso de errores en la ejecución del programa, y al término de su ejecución estos canales se cierran automáticamente. Los archivos estandar STDIN, STDOUT, STDERR son descriptores de archivos (son valores de tipo int en C/C++ que sirven como clave para que internamente se reconozca a que tendrá acceso el proceso que se esta ejecutando), estos son estándar porque los valores que se le asignan a cada uno son: STDIN = 0, STDOUT = 1, STDOUT = 2.
 Por defecto la entrada estándar representa a los flujos de datos proveniente del teclado y la salida estandár común/errores representa al flujo de datos que se dirige a la pantalla y se utilizan para ingresar datos que pueda requerir un programa o para extraerlos de el.  
 
 Ejemplos de como redirigir los archivos estandar por CLI:
