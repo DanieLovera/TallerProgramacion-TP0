@@ -12,7 +12,7 @@
 - [x] Paso 3
 - [x] Paso 4
 - [x] Paso 5
-- [ ] Paso 6
+- [x] Paso 6
 
 ---
 ### DESARROLLO ###   
@@ -157,7 +157,6 @@ A continuación se detallan los errores, estos fueron enumerados para mayor clar
 5. **implicit declaration of function 'wordscounter_destroy'**: Es el mismo error que en (2), (3) y (4).  
 
 **c. ¿El sistema reportó algún WARNING? ¿Por qué?**  
-[Error] Fallo la compilacion del codigo en 'source_unsafe.zip'. Codigo de error 2
 > El sistema no reportó ningún warning, todos fueron errores, sin embargo los errores del 2 al 5 en realidad son warnings que se estan considerando como errores porque así se le indica al compilador que lo haga (**flag Werror**), es decir realmente no serían un inconveniente para que se generará el código objeto, no obstante los warnings son posibles errores en tiempo de ejecución y no es recomendable dejarlos pasar pues es mas fácil corregir errores en compilación que hacerlo con un debugger en ejecución.  
 
 ### Paso 2: SERCOM - Errores de generación 2 ###  
@@ -260,11 +259,11 @@ collect2: error: ld returned 1 exit status
 make: *** [/task/student/MakefileTP0:135: tp] Error 1
 ```
 Solo se reportó un error al momento de generar el ejecutable:  
-> **undefined reference to `wordscounter_destroy'**: Indica que no se definio una referencia a la funcion wordscounter_destroy, este es un error en tiempo de linkeo. Esto se puede reconocer por las siguientes formas:  
+> **undefined reference to `wordscounter_destroy'**: Indica que no se definió una referencia a la función wordscounter_destroy, este es un error en tiempo de linkeo. Esto se puede reconocer por las siguientes formas:  
 
 1. El nombre del problema es una pista para entender que el linker lo generó,ya que indica que no encuentra cual es la dirección de memoria a la cual asignarle los llamados del main.c a esta.  
-2. Revisando el proceso de compilación que se llevo acabo, se observa que las primeras 4 líneas corresponden a llamados al compilador para llevar los archivos **paso3_wordscounter.c** y **paso3_main.c** a código objeto por separado (flag **-c**), pero la línea 5 ya es una instrucción diferente, se le pide al compilador que cree un ejecutable linkeando los códigos objetos que recién generó, es por eso que el llamado al linker (**/usr/bin/ld**) genera un error en la función que se definió como ***"main"*** internamente en el código assembly.  
-3. El error reportado según el informe lo genera el linker (**error: ld returned 1 exit status**), el código de que devuelve al momento de salir del proceso es 1 de error.  
+2. Revisando el proceso de compilación que se llevo acabo, se observa que las primeras 4 líneas corresponden a llamados al compilador para llevar los archivos **paso3_wordscounter.c** y **paso3_main.c** a código objeto por separado (flag **-c**), pero la línea 5 es una instrucción diferente, se le esta pidiendo al compilador que cree un ejecutable linkeando los códigos objetos que recién generó, es por eso el llamado al linker (**/usr/bin/ld**) genera un error en la función que se definió como ***"main"*** internamente en el código assembly.  
+3. El error reportado, según el informe, es generado por el linker (**error: ld returned 1 exit status**), el código de que devuelve al momento de salir del proceso es 1 de error.  
 
 ### Paso 4: SERCOM - Memory Leaks y Buffer Overflows ###  
 Se entregaron los módulos correspondientes a la cuarta entrega en el SERCOM, no se encontraron errores de compilación, linkeo o de estilo pero el programa no funciona como debería.
@@ -576,6 +575,32 @@ Starting program: /home/daniel/Documents/taller_programacion_I/tp0/pasos/tp inpu
 6. **quit**: Cierra el debugger.
 
 > El debugger no se detuvo porque la función esta dentro de un estructura condicional, la única forma que se detenga es que el programa no salte ese bloque de código. Nótese que ahi esta el bug por el cual no cuenta 1 palabra en el archivo sino 0, nunca entra en la porción de código que controla el contador (en donde esta el breakpoint), para que esto suceda necesita encontrar un caracter delimitador en el texto y ya se observó en el punto **c** que el archivo cuenta con 4 caractéres de los cuales ninguno es delimitador, encuentra primero el EOF antes que alguno de estos y no alcanza a contar la palabra.
+
+### Paso 6: SERCOM - Entrega exitosa ###  
+Se entregaron los módulos correspondientes a la sexta entrega en el SERCOM, no se encontraron errores de compilación, linkeo o de estilo pero aún no pasan todas las pruebas requeridas. 
+
+**a. Descripción de los cambios realizados con respecto a la versión del paso 5.**  
+  
+**Ejecución del comando diff**   
+
+![Ejecucion del comando diff5](./screenshots/diff_command5.png)  
+
+Con respecto al paso anterior se actualizaron los headers, se definio una constante (símbolo del procesador), y se modifico la función de cambio de estado para corregir el bug con al contar la ultima palabra de un archivo que no contenga un delimitador antes del EOF.
+
+**b. Entregas realizadas.**  
+
+![submission2 fallida](./screenshots/submission2.png)  
+![submission1 fallida](./screenshots/submission1.png)  
+ 
+**c. Ejecuciones sobre prueba input_single_word.txt**  
+  
+![prueba_input_single_word](./screenshots/single_word_test.png)  
+
+---
+
+### Conclusiones ###
+
+
 
 
 
