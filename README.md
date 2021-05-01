@@ -363,9 +363,36 @@ sys     0m0.055s
 ==00:00:00:01.231 60== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 ```
   
-Valgrind detectó 218 alocaciones de memoria dinámica de las cuales liberó 2 y se perdieron 216 de esas peticiones, de las cuales 215 fueron pérdidas definitivas y 1 es aún una dirección alcanzable, a continuación se detallan estos errores:    
+Valgrind detectó dos problemas diferentes:
+1. **Recursos abiertos sin ser liberados.**  
+2. **Pérdidas de memoria**: 218 alocaciones de memoria dinámica de las cuales liberó 2 y se perdieron 216 de esas peticiones, de las cuales 215 fueron pérdidas definitivas y 1 es aún una dirección alcanzable.  
 
-**Bloques de memoria aún alcanzables**
+**Recursos abiertos sin ser liberados**  
+```
+==00:00:00:01.228 60== FILE DESCRIPTORS: 5 open at exit.
+==00:00:00:01.228 60== Open file descriptor 4: input_tda.txt
+==00:00:00:01.228 60==    at 0x495FEAB: open (open64.c:48)
+==00:00:00:01.228 60==    by 0x48E2195: _IO_file_open (fileops.c:189)
+==00:00:00:01.228 60==    by 0x48E2459: _IO_file_fopen@@GLIBC_2.2.5 (fileops.c:281)
+==00:00:00:01.228 60==    by 0x48D4B0D: __fopen_internal (iofopen.c:75)
+==00:00:00:01.228 60==    by 0x48D4B0D: fopen@@GLIBC_2.2.5 (iofopen.c:86)
+==00:00:00:01.228 60==    by 0x109177: main (paso4_main.c:14)
+==00:00:00:01.228 60==
+==00:00:00:01.228 60== Open file descriptor 3: /task/student/cases/tda/__valgrind__
+==00:00:00:01.228 60==    <inherited from parent>
+==00:00:00:01.228 60==
+==00:00:00:01.228 60== Open file descriptor 2: /task/student/cases/tda/__stderr__
+==00:00:00:01.228 60==    <inherited from parent>
+==00:00:00:01.228 60==
+==00:00:00:01.228 60== Open file descriptor 1: /task/student/cases/tda/__stdout__
+==00:00:00:01.228 60==    <inherited from parent>
+==00:00:00:01.228 60==
+==00:00:00:01.228 60== Open file descriptor 0: /task/student/cases/tda/__stdin__
+==00:00:00:01.228 60==    <inherited from parent>
+```  
+> El error indica que al finalizar el programa quedaron 5 file descriptors abiertos, el principal fue por el llamado a la función main del módulo (paso4_main.c) pero también se reportaron 4 problemas adicionales del mismo tipo (uno por cada salida esperada en el caso de prueba 'TDA') de los cuales valgrind indica que son heredados del padre, internamente no se sabe como ocurren estos llamados por lo cual no se ofrecen mayores detalles.
+
+**Pérdida de memoria: Bloques de memoria aún alcanzables**
 ```
 ==00:00:00:01.231 60== 472 bytes in 1 blocks are still reachable in loss record 1 of 2
 ==00:00:00:01.231 60==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
@@ -376,7 +403,7 @@ Valgrind detectó 218 alocaciones de memoria dinámica de las cuales liberó 2 y
 ```
 > El primer error registrado indica que se perdieron 472 bytes de memoria que corresponden a un único bloque de memoria (correspondientes a una única petición de memoria) y aún son alcanzables, es decir, es memoria que el programador pudo liberar pues en alguna parte del programa hay un puntero que contiene la referencia a este bloque. Valgrind no puede indicar quien la contiene pero si indica el momento en el cual se solicito la memoria y fue en el archivo **paso4_main.c** en la linea **4**. En este caso es memoria que quedo atrapada por olvidar liberar un recurso abierto. 
 
-**Bloques de memoria de pérdida definitiva**
+**Pérdida de memoria: Bloques de memoria de pérdida definitiva**
 
 ```
 ==00:00:00:01.231 60== 1,505 bytes in 215 blocks are definitely lost in loss record 2 of 2
@@ -441,7 +468,23 @@ sys     0m0.053s
 ==00:00:00:01.181 48== For lists of detected and suppressed errors, rerun with: -s
 ==00:00:00:01.181 48== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
-Valgrind detectó un único error de memoria, en este caso no es por pérdidas sino por un buffer overflow, la última función que se ejecutó antes del problema fue memcpy la cual copia una cantidad de datos exacta desde un buffer fuente a un destino, pero si el tamaño del buffer destino es menor al del buffer fuente memcpy no lo controla, el comportamiento es indefinido. En este caso se esta intentando copiar algo muy grande en un buffer muy pequeño y se produce un overflow, sin embargo este problema no lo detecta unicamente valgrind y también falla la ejecución sin valgrind, de hecho en el registro se observa como se informa el error **memcpy_chk: buffer overflow detected** antes de comenzar siquiera a correr valgrind y por alguna razón continua la ejecución de valgrind y lo detecta también.  
+Valgrind detectó dos errores, nuevamente uno relacionado a recursos no liberados y otro de memoria, este último no es por pérdidas sino por un buffer overflow, la última función que se ejecutó antes del problema fue memcpy la cual copia una cantidad de datos exacta desde un buffer fuente a un destino, pero si el tamaño del buffer destino es menor al del buffer fuente memcpy no lo controla, el comportamiento es indefinido. En este caso se esta intentando copiar algo muy grande en un buffer muy pequeño y se produce un overflow, sin embargo este problema no lo detecta unicamente valgrind y también falla la ejecución sin valgrind, de hecho en el registro se observa como se informa el error **memcpy_chk: buffer overflow detected** antes de comenzar siquiera a correr valgrind y por alguna razón continua la ejecución de valgrind y lo detecta también.  
+  
+**Recursos abiertos sin liberar**
+```
+==00:00:00:01.181 48== FILE DESCRIPTORS: 4 open at exit.
+==00:00:00:01.181 48== Open file descriptor 3: /task/student/cases/nombre_largo/__valgrind__
+==00:00:00:01.181 48==    <inherited from parent>
+==00:00:00:01.181 48==
+==00:00:00:01.181 48== Open file descriptor 2: /task/student/cases/nombre_largo/__stderr__
+==00:00:00:01.181 48==    <inherited from parent>
+==00:00:00:01.181 48==
+==00:00:00:01.181 48== Open file descriptor 1: /task/student/cases/nombre_largo/__stdout__
+==00:00:00:01.181 48==    <inherited from parent>
+==00:00:00:01.181 48==
+==00:00:00:01.181 48== Open file descriptor 0: /task/student/cases/nombre_largo/__stdin__
+==00:00:00:01.181 48==    <inherited from parent>
+```
   
 **Error memcpy**  
 ```
